@@ -6,13 +6,14 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'login': "url('/src/assets/backgrounds/bg.jpg')"
+        'login': "url('/src/assets/loginPage/backgrounds/bg.jpg')",
+        'tasks': "url('/src/assets/loginPage/backgrounds/tasks.jpeg')"
       },
       width : {
-        'login': '450px'
+        'login': '450px',
       },
       height : {
-        'login': '580px'
+        'login': '580px',
       }
     },
   },
