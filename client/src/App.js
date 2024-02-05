@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 const App = () => {
     const [isValid, setIsValid] = useState(false)
-    const [opacity, setOpacity] = useState(false)
+    const [isOpacity, setIsOpacity] = useState(false)
 
     useEffect(() => {
         const animationPause = setTimeout(() => {
@@ -10,7 +10,7 @@ const App = () => {
         }, 1000);
 
         const opacityPause = setTimeout(() => {
-            setOpacity(true)
+            setIsOpacity(true)
         }, 1300);
 
         return () => {
@@ -29,10 +29,10 @@ const App = () => {
             >
                 <div className={`
                         absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-3xl w-login h-login bg-white bg-tasks bg-center bg-no-repeat 
-                        transition-opacity duration-1000 ${opacity ? 'opacity-100' : 'opacity-0'}
+                        transition-opacity duration-1000 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
                     `} >
                     <div className='bg-gradient-to-t from-gray-700 via-gray-450 bg-opacity-40 w-login h-login'>
-                        {/* Login Stuffx */}
+                        {/* Login Stuff */}
                     </div>
                 </div>
             </div>
