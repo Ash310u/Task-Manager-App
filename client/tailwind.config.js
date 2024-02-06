@@ -11,11 +11,14 @@ module.exports = {
       },
       width : {
         'login-moon': '50%',
-        'login': '40%',
+        'login': '60%',
       },
       height : {
         'login-moon': '70%',
-        'login': '80%',
+        'login': '60%',
+      },
+      backdropBlur: {
+        xs: '2px',
       }
     },
   },

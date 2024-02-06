@@ -21,7 +21,7 @@ const LoginPage = () => {
 
         const opacityPause = setTimeout(() => {
             setIsOpacity(true)
-        }, 1000);
+        }, 1300);
 
         return () => {
             clearTimeout(animationPause)
@@ -32,38 +32,36 @@ const LoginPage = () => {
     return (
         <div
             className={`
-                    relative rounded-lg bg-white w-login-moon h-login-moon p-5 bg-opacity-70
+                    relative rounded-full bg-login-moon backdrop-blur-md w-2/4 aspect-square
                     transform transition-transform duration-300 ease-in-out ${isValid ? '-translate-y-50' : 'translate-y-full opacity-0'}
                 `}
         >
-            <div className="rounded-lg bg-login bg-center bg-fixed w-full h-full ">
-                <div className={`
-                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-3xl w-login h-login bg-white bg-tasks bg-center bg-no-repeat 
+            <div className={`
+                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login bg-white bg-tasks bg-center bg-no-repeat 
                         transition-opacity duration-500 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
                     `} >
-                    <div className='flex flex-row justify-center items-center bg-gradient-to-t  from-gray-700 via-gray-450  bg-opacity-40 w-full h-full'>
-                        <form className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
-                            <div className="flex flex-col justify-between items-center gap-2 text-white ">
-                                <Input type={'text'} placeholder={'Enter your name'} >Name</Input>
-                                <Input type={'email'} placeholder={'Enter your email'} >Email</Input>
-                                <Input type={'password'} placeholder={'Enter a password'} >password</Input>
-                            </div>
-                            <div className=" h-20 flex flex-col justify-between items-center">
-                                <button
-                                    className='w-72 p-1 bg-gray-200 border-gray-200 hover:bg-gray-950 hover:border-gray-950  bg-opacity-30 hover:bg-opacity-90 hover:text-white rounded-lg'
-                                >
-                                    Sign In
-                                </button>
-                                <button
-                                    onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-900 opacity-70 hover:opacity-100 border-gray-200 rounded-lg'
-                                >
-                                    <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
-                                    Sign In with Google
-                                </button>
-                            </div>
-                        </form>
+                <div className='flex flex-row justify-center items-center bg-gradient-to-t  from-gray-700 via-gray-450  bg-opacity-40 w-full h-full  backdrop-blur-xs'>
+                    <form className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
+                        <div className="flex flex-col justify-between items-center gap-2 text-white ">
+                            <Input type={'text'} placeholder={'Enter your name'} >Name</Input>
+                            <Input type={'email'} placeholder={'Enter your email'} >Email</Input>
+                            <Input type={'password'} placeholder={'Enter a password'} >password</Input>
+                        </div>
+                        <div className=" h-20 flex flex-col justify-between items-center">
+                            <button
+                                className='w-72 p-1 bg-gray-200 border-gray-200 hover:bg-gray-950 hover:border-gray-950  bg-opacity-30 hover:bg-opacity-90 hover:text-white rounded-lg'
+                            >
+                                Sign In
+                            </button>
+                            <button
+                                onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-900 opacity-70 hover:opacity-100 border-gray-200 rounded-lg'
+                            >
+                                <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
+                                Sign In with Google
+                            </button>
+                        </div>
+                    </form>
 
-                    </div>
                 </div>
             </div>
         </div>
