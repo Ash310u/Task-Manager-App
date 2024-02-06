@@ -9,4 +9,4 @@ const Route = ({ path, children}) => {
     return null;
 }
 
-export default Route
+export default Route;
