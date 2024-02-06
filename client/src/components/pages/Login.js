@@ -46,6 +46,7 @@ const LoginPage = () => {
                             <div  className=" h-20 flex flex-col justify-between items-center gap-2 text-white ">
                                 <Input type={'text'} placeholder={'Enter your name'} >Name</Input>
                                 <Input type={'email'} placeholder={'Enter your email'} >Email</Input>
+                                <Input type={'password'} placeholder={'Enter a password'} >password</Input>
                             </div>
                             <div  className=" h-20 flex flex-col justify-between items-center">
                                 <button
