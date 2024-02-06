@@ -10,12 +10,12 @@ module.exports = {
         'tasks': "url('/src/assets/loginPage/backgrounds/tasks.jpeg')"
       },
       width : {
-        'login': '450px',
-        'form': '350px',
+        'login-moon': '50%',
+        'login': '40%',
       },
       height : {
-        'login': '580px',
-        'form': '350px',
+        'login-moon': '70%',
+        'login': '80%',
       }
     },
   },
