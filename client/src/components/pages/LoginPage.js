@@ -1,11 +1,26 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../Input";
+import { useCreateAccountMutation } from "../../store";
 
 const LoginPage = () => {
     const [isValid, setIsValid] = useState(false)
     const [isOpacity, setIsOpacity] = useState(false)
     const [googlePing, setGooglePing] = useState(false)
+
+    const [createAccount, results] = useCreateAccountMutation()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        
+        let user = {
+            name: e.target.name.value,
+            email: e.target.email.value,
+            password: e.target.password.value
+        }
+        createAccount(user)
+    }
+    
 
     const handleClickPing = () => {
         setGooglePing(true)
@@ -42,11 +57,11 @@ const LoginPage = () => {
                         transition-opacity duration-500 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
                     `} >
                     <div className='flex flex-row justify-center items-center bg-gradient-to-t  from-gray-700 via-gray-450  bg-opacity-40 w-full h-full  backdrop-blur-xs'>
-                        <form className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
+                        <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
                             <div className="flex flex-col justify-between items-center gap-2 text-white ">
-                                <Input type={'text'} placeholder={'Enter your name'} >Name</Input>
-                                <Input type={'email'} placeholder={'Enter your email'} >Email</Input>
-                                <Input type={'password'} placeholder={'Enter a password'} >password</Input>
+                                <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input>
+                                <Input name='email' type={'email'} placeholder={'Enter your email'} >Email</Input>
+                                <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                             </div>
                             <div className=" h-20 flex flex-col justify-between items-center">
                                 <button
