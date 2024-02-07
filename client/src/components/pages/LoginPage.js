@@ -36,7 +36,7 @@ const LoginPage = () => {
 
         const opacityPause = setTimeout(() => {
             setIsOpacity(true)
-        }, 1200);
+        }, 1300);
 
         return () => {
             clearTimeout(animationPause)
@@ -45,7 +45,7 @@ const LoginPage = () => {
     }, [])
 
     return (
-        <div className="w-screen h-screen flex justify-center items-center overflow-hidden backdrop-blur-xs">
+        <div className="w-screen h-screen flex justify-center items-center overflow-hidden backdrop-blur-md">
             <div
                 className={`
                     relative rounded-full bg-login bg-fixed bg-center bg-no-repeat blur-none w-2/4 aspect-square
@@ -53,10 +53,9 @@ const LoginPage = () => {
                 `}
             >
                 <div className={`
-                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login bg-white bg-tasks bg-center bg-no-repeat 
-                        transition-opacity duration-500 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
+                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login  bg-white bg-opacity-20 backdrop-blur p-5 bg-no-repeat transition-opacity duration-700 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
                     `} >
-                    <div className='flex flex-row justify-center items-center bg-gradient-to-t  from-gray-700 via-gray-450  bg-opacity-40 w-full h-full  backdrop-blur-xs'>
+                    <div className='flex flex-row justify-center items-center  bg-opacity-10 w-full h-full rounded-full bg-login bg-center bg-fixed bg-no-repeat'>
                         <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
                             <div className="flex flex-col justify-between items-center gap-2 text-white ">
                                 <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input>
@@ -65,12 +64,12 @@ const LoginPage = () => {
                             </div>
                             <div className=" h-20 flex flex-col justify-between items-center">
                                 <button
-                                    className='w-72 p-1 bg-gray-200 border-gray-200 hover:bg-gray-950 hover:border-gray-950  bg-opacity-30 hover:bg-opacity-90 hover:text-white rounded-lg'
+                                    className='w-72 p-1 bg-gray-200 border-gray-200  opacity-80 bg-opacity-30 hover:bg-opacity-100 text-white  hover:text-gray-950 rounded-full'
                                 >
                                     Sign In
                                 </button>
                                 <button
-                                    onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-900 opacity-70 hover:opacity-100 border-gray-200 rounded-lg'
+                                    onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-950 opacity-70 hover:opacity-100 border-gray-200 rounded-full'
                                 >
                                     <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
                                     Sign In with Google

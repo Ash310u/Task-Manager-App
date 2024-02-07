@@ -6,8 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'login': "url('/src/assets/loginPage/backgrounds/bg.jpg')",
-        'tasks': "url('/src/assets/loginPage/backgrounds/tasks.jpeg')"
+        'login': "url('/src/assets/loginPage/backgrounds/bg.jpg')"
       },
       width : {
         'login-moon': '50%',
