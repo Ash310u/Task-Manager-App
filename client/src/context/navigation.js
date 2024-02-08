@@ -1,28 +1,31 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useEffect, useState } from "react";
 
 const NavigationContext = createContext();
 
-const NavigationProvider = ({children}) => {
-    const [currPath, setCurrPath] = useState(window.location.pathname)
+const NavigationProvider = ({ children }) => {
+    const [currentPath, setCurrentPath] = useState(window.location.pathname)
 
     useEffect(() => {
         const handler = () => {
-            setCurrPath(window.location.pathname);
+            setCurrentPath(window.location.pathname)
         }
+        // Anytime you add a EventListener to the window object, you always make sure you add up a cleanup function.
+        window.addEventListener('popstate', handler)
 
-        window.addEventListener('popstate', handler);
-
-        return () => window.removeEventListener('popstate', handler)
-    })
+        return () => {
+            window.removeEventListener('popstate', handler)
+        }
+    },[])
 
     const navigate = (to) => {
-        window.history.pushState({}, '', to)
+        window.history.pushState({}, '', to);
+        setCurrentPath(to)
     }
-    
-    return <NavigationContext.Provider value={{currPath, navigate}}>
+
+    return <NavigationContext.Provider value={{ currentPath, navigate }}>
         {children}
     </NavigationContext.Provider>
 }
 
-export { NavigationProvider };
-export default NavigationContext;
+export { NavigationProvider }
+export default NavigationContext

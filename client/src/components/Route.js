@@ -1,12 +1,12 @@
 import useNavigation from "../hooks/useNavigation";
 
-const Route = ({ path, children}) => {
-    const { currPath } = useNavigation()
-
-    if (path === currPath) {
-        return children
+const Route = ({ path, children }) => {
+    const { currentPath } = useNavigation()
+    
+    if (path === currentPath) {
+        return children;
     }
     return null;
 }
 
-export default Route;
+export default Route;   
