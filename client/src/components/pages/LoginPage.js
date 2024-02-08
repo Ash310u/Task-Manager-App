@@ -2,6 +2,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../Input";
 import { useCreateAccountMutation } from "../../store";
+import Link from "../Link"
 
 const LoginPage = () => {
     const [isValid, setIsValid] = useState(false)
@@ -18,7 +19,8 @@ const LoginPage = () => {
             email: e.target.email.value,
             password: e.target.password.value
         }
-        createAccount(user)
+        console.log(user);
+        // createAccount(user)
     }
     
 
@@ -66,7 +68,7 @@ const LoginPage = () => {
                                 <button
                                     className='w-72 p-1 bg-gray-200 border-gray-200  opacity-80 bg-opacity-30 hover:bg-opacity-100 text-white  hover:text-gray-950 rounded-full'
                                 >
-                                    Sign In
+                                    <Link to={'/dashboard'}>Sign In</Link>
                                 </button>
                                 <button
                                     onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-950 opacity-70 hover:opacity-100 border-gray-200 rounded-full'
