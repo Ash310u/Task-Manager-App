@@ -5,8 +5,8 @@ import { useCreateAccountMutation } from "../../store";
 import Link from "../Link"
 
 const LoginPage = () => {
-    const [isValid, setIsValid] = useState(false)
-    const [isOpacity, setIsOpacity] = useState(false)
+    const [opacityDiv, setOpacityDiv] = useState(false)
+    const [opacityInput, setOpacityInput] = useState(false)
     const [googlePing, setGooglePing] = useState(false)
 
     // const [createAccount, results] = useCreateAccountMutation()
@@ -31,16 +31,14 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-        const animationPause = setTimeout(() => {
-            setIsValid(true)
-        }, 1000);
-
-        const opacityPause = setTimeout(() => {
-            setIsOpacity(true)
-        }, 1300);
+        const opacityPause =setTimeout(() => {
+                setOpacityDiv(true)
+                setTimeout(() => {
+                    setOpacityInput(true)
+                }, 200);
+            }, 1000);
 
         return () => {
-            clearTimeout(animationPause)
             clearTimeout(opacityPause)
         }
     }, [])
@@ -50,11 +48,11 @@ const LoginPage = () => {
             <div
                 className={`
                     relative rounded-full bg-login bg-fixed bg-center bg-no-repeat blur-none w-2/4 aspect-square
-                    transform transition-transform duration-300 ease-in-out ${isValid ? '-translate-y-50' : 'translate-y-full opacity-0'}
+                    transition-opacity duration-700 ease-in-out ${opacityDiv ? 'opacity-100' : ' opacity-0'}
                 `}
             >
                 <div className={`
-                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login  bg-white bg-opacity-20 backdrop-blur p-5 bg-no-repeat transition-opacity duration-700 ease-in ${isOpacity ? 'opacity-100' : 'opacity-0'}
+                        absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login  bg-white bg-opacity-20 backdrop-blur p-5 bg-no-repeat transition-opacity duration-700 ease-in ${opacityInput ? 'opacity-100' : 'opacity-0'}
                     `} >
                     <div className='flex flex-row justify-center items-center  bg-opacity-10 w-full h-full rounded-full bg-login bg-center bg-fixed bg-no-repeat'>
                         <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
