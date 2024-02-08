@@ -9,20 +9,19 @@ const LoginPage = () => {
     const [isOpacity, setIsOpacity] = useState(false)
     const [googlePing, setGooglePing] = useState(false)
 
-    const [createAccount, results] = useCreateAccountMutation()
+    // const [createAccount, results] = useCreateAccountMutation()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
+
         let user = {
             name: e.target.name.value,
             email: e.target.email.value,
             password: e.target.password.value
         }
-        console.log(user);
         // createAccount(user)
     }
-    
+
 
     const handleClickPing = () => {
         setGooglePing(true)
@@ -65,17 +64,21 @@ const LoginPage = () => {
                                 <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                             </div>
                             <div className=" h-20 flex flex-col justify-between items-center">
-                                <button
-                                    className='w-72 p-1 bg-gray-200 border-gray-200  opacity-80 bg-opacity-30 hover:bg-opacity-100 text-white  hover:text-gray-950 rounded-full'
-                                >
-                                    <Link to={'/dashboard'}>Sign In</Link>
-                                </button>
-                                <button
-                                    onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-950 opacity-70 hover:opacity-100 border-gray-200 rounded-full'
-                                >
-                                    <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
-                                    Sign In with Google
-                                </button>
+                                <Link to='/dashboard'>
+                                    <button
+                                        className='w-72 p-1 bg-gray-200 border-gray-200  opacity-80 bg-opacity-30 hover:bg-opacity-100 text-white  hover:text-gray-950 rounded-full'
+                                    >
+                                        Sign In
+                                    </button>
+                                </Link>
+                                <Link to='/dashboard'>
+                                    <button
+                                        onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1 bg-gray-200 text-gray-950 opacity-70 hover:opacity-100 border-gray-200 rounded-full'
+                                    >
+                                        <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
+                                        Sign In with Google
+                                    </button>
+                                </Link>
                             </div>
                         </form>
 
