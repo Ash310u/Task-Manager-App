@@ -4,7 +4,7 @@ import LoginPage from "./components/pages/LoginPage";
 
 const App = () => {
     return (
-        <div className='w-screen h-screen bg-black bg-login bg-no-repeat bg-fixed bg-cover bg-center flex justify-center items-center overflow-hidden'>
+        <div>
             <Route path='/'><LoginPage /></Route>
             <Route path='/dashboard'><DashboardPage /></Route>
         </div>
