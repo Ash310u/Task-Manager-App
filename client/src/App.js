@@ -4,7 +4,7 @@ import LoginPage from "./components/pages/LoginPage";
 
 const App = () => {
     return (
-        <div>
+        <div className="min-w-screen min-h-screen  bg-gray-950">
             <Route path='/'><LoginPage /></Route>
             <Route path='/dashboard'><DashboardPage /></Route>
         </div>
