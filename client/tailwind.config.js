@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'login': "url('/src/assets/loginPage/backgrounds/bg.jpg')"
+        'login': "url('/src/assets/loginPage/backgrounds/bg.jpg')",
       },
       width : {
         'login': '60%',
