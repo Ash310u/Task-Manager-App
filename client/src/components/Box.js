@@ -14,11 +14,11 @@ const Box = ({ children }) => {
     }
 
     return (
-        <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-between align-baseline select-none">
+        <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">
             <div onClick={handleChecked} className="bg-none text-lg text-gray-200 h-2/3 subpixel-antialiased rounded-full flex flex-col items-center">
                 { isChecked ? <RiCheckboxBlankCircleFill /> : <RiCheckboxBlankCircleLine />}
             </div>
-            <div className="min-w-64 max-h-min flex flex-row bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
+            <div className="min-w-64 max-h-min flex flex-row  items-center  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
                 <p className="text-gray-50 subpixel-antialiased break-words select-text ">
                     {children}
                 </p>
