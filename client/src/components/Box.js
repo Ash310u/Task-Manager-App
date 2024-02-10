@@ -9,7 +9,7 @@ const Box = ({ children }) => {
     
     const handleChecked = () => {
         setIsChecked((curr) => {
-            return !isChecked;
+            return !curr;
         })
     }
 
