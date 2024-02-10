@@ -14,8 +14,8 @@ const Box = ({ children }) => {
     }
 
     return (
-        <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-between align-baseline m-2 select-none">
-            <div onClick={handleChecked} className="bg-none text-lg text-gray-200 h-2/3 subpixel-antialiased rounded-full flex flex-col justify-center items-center">
+        <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-between align-baseline select-none">
+            <div onClick={handleChecked} className="bg-none text-lg text-gray-200 h-2/3 subpixel-antialiased rounded-full flex flex-col items-center">
                 { isChecked ? <RiCheckboxBlankCircleFill /> : <RiCheckboxBlankCircleLine />}
             </div>
             <div className="min-w-64 max-h-min flex flex-row bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
