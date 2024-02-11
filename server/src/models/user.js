@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require("validator")
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const Task = require('./task')
+const Topic = require('./topic')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -58,8 +58,8 @@ const userSchema = new mongoose.Schema({
 })
 
 // setting up a virtual property, It's a relationship between two entities (in this case between user & task)
-userSchema.virtual('tasks', {
-    ref: 'Task',
+userSchema.virtual('topics', {
+    ref: 'Topic',
     // local field is that where that local data is stored [ _id ObjectId on User model ]
     localField: '_id',
     // foreign field is the name of the field on the other thing, what creates the relationship between two models [ owner ObjectId on Task model]
@@ -123,12 +123,12 @@ userSchema.pre('save', async function (next) {  // this function needs to be a s
     next()
 })
 
-// delete user tasks when user is removed
+// delete user's topics when user is removed
 
 userSchema.pre('remove', async function (next) {
     const user = this
 
-    await Task.deleteMany({ owner: user._id })
+    await Topic.deleteMany({ owner: user._id })
     next()
 })
 
