@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-
 const taskSchema = new mongoose.Schema({
     description:{
         type:String,
@@ -12,9 +10,9 @@ const taskSchema = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    owner:{
+    topic:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'User',
+        ref:'topic',
         required: true
     }
 }, {
