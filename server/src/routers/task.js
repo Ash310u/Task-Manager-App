@@ -1,7 +1,6 @@
 const express = require("express");
 const Task = require('../models/task');
 const auth = require("../middleware/auth");
-const User = require("../models/user");
 
 const router = new express.Router()
 
@@ -10,7 +9,7 @@ router.post("/tasks", auth, async (req, res) => {
 
     const task = new Task({
         ...req.body,
-        owner: req.user._id
+        topic:req.topic._id
     })
     try {
         await task.save()
@@ -32,16 +31,18 @@ router.get('/tasks', auth, async (req, res) => {
     }
 
     if (req.query.sortBy) {
+        console.log(req.query.sortBy)
         // break up the sortBy value using split with the special character "_"
         const parts = req.query.sortBy.split('_')
+        console.log(parts)
         // using braket notation to create "sort object"
         sort[parts[0]] =  parts[1] === 'desc' ? -1 : 1 // setting up a ternary operator
     }
 
     try {
-        // const tasks = await Task.find({owner: req.user._id})
+        // const tasks = await Task.find({topic: req.topic._id})
         // alternative
-        await req.user.populate({
+        await req.topic.populate({
             path: 'tasks',
             match,
             options: {
@@ -51,7 +52,7 @@ router.get('/tasks', auth, async (req, res) => {
                 sort
             }
         }).execPopulate()
-        res.send(req.user.tasks)
+        res.send(req.topic.tasks)
     } catch (err) {
         res.status(500).send()
     }
@@ -61,7 +62,7 @@ router.get('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const task = await Task.findOne({ _id, owner: req.user._id })
+        const task = await Task.findOne({ _id, topic: req.topic._id })
 
         if (!task) {
             return res.status(404).send()
@@ -83,7 +84,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
 
     const _id = req.params.id
     try {
-        const task = await Task.findOne({ _id, owner: req.user._id })
+        const task = await Task.findOne({ _id, topic: req.topic._id })
         if (!task) {
             return res.status(404).send()
         }
@@ -101,7 +102,7 @@ router.delete('/tasks/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const task = await Task.findOneAndDelete({ _id, owner: req.user._id })
+        const task = await Task.findOneAndDelete({ _id, topic: req.topic._id })
 
         if (!task) {
             return res.status(404).send({ error: 'Invalid Id' })
