@@ -12,7 +12,7 @@ const taskSchema = new mongoose.Schema({
     },
     topic:{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'topic',
+        ref:'Topic',
         required: true
     }
 }, {
