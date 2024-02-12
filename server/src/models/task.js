@@ -9,17 +9,9 @@ const taskSchema = new mongoose.Schema({
     completed:{
         type:Boolean,
         default:false
-    },
-    topic:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Topic',
-        required: true
     }
 }, {
     timestamps:true
 })
 
-// In this file we are put the criteria for Tasks details and exports that
-const Task = mongoose.model('Task', taskSchema)
-
-module.exports = Task
+module.exports = taskSchema
