@@ -1,59 +1,31 @@
 const express = require("express");
-const Task = require('../models/task');
+const Topic = require("../models/topic");
 const auth = require("../middleware/auth");
 
 const router = new express.Router()
 
 
-router.post("/tasks", auth, async (req, res) => {
-
-    const task = new Task({
+router.post("/topics", auth, async (req, res) => {
+    const topic = new Topic({
         ...req.body,
-        topic:req.topic._id
+        owner:req.user._id
     })
+
     try {
-        await task.save()
-        res.status(201).send(task)
+        await topic.save()
+        res.status(201).send(topic)
     } catch (err) {
         res.status(400).send(err);
     }
 });
 
-// GET /tasks?completed=true
-// GET /tasks?limit=10&skip=10
-// GET /tasks?sortBy=createdAt_desc (we can use special character like "_",":" can be uasble before descending/ascending) [ for ascending order it would "1" & for descending order it would be "-1"]
-router.get('/tasks', auth, async (req, res) => {
-    const match = {}
-    const sort = {}
-
-    if (req.query.completed) {
-        match.completed = req.query.completed === 'true'
-    }
-
-    if (req.query.sortBy) {
-        console.log(req.query.sortBy)
-        // break up the sortBy value using split with the special character "_"
-        const parts = req.query.sortBy.split('_')
-        console.log(parts)
-        // using braket notation to create "sort object"
-        sort[parts[0]] =  parts[1] === 'desc' ? -1 : 1 // setting up a ternary operator
-    }
+router.get('/topics', auth, async (req, res) => {
 
     try {
-        // const tasks = await Task.find({topic: req.topic._id})
-        // alternative
-        await req.topic.populate({
-            path: 'tasks',
-            match,
-            options: {
-                limit:parseInt(req.query.limit),
-                skip:parseInt(req.query.skip),
-                // sort property
-                sort
-            }
-        }).execPopulate()
-        res.send(req.topic.tasks)
+        await req.user.populate('topics').execPopulate()
+        res.send(req.user.topics)
     } catch (err) {
+        console.log(err)
         res.status(500).send()
     }
 })
