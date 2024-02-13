@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors")
 require("./db/mongoose");
 const userRouter = require('./routers/user')
-const taskRouter = require('./routers/task');
+const topicRouter = require('./routers/topic');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(cors({
     origin:'http://localhost:3000'
 }));
 app.use(express.json());
-app.use(taskRouter)
+app.use(topicRouter)
 app.use(userRouter);
 
 module.exports = app
