@@ -55,7 +55,7 @@ router.get('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
     }
 })
 
-router.patch('/tasks/:id', auth, async (req, res) => {
+router.patch('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -64,15 +64,24 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         return res.status(400).send({ error: 'Invalid updates!' })
     }
 
+    const topic_id = req.params.topic_id
     const _id = req.params.id
+
     try {
-        const task = await Task.findOne({ _id, topic: req.topic._id })
+        const topic = await Topic.findOne({ _id : topic_id })
+        if (!topic) {
+            return res.status(404).send()
+        }
+
+        const task = topic.tasks.filter(task => {
+            return task._id == _id
+        });
         if (!task) {
             return res.status(404).send()
         }
 
-        updates.forEach((update) => task[update] = req.body[update])
-        await task.save()
+        updates.forEach((update) => task[0][update] = req.body[update])
+        await topic.save()
 
         res.send(task)
     } catch (err) {
