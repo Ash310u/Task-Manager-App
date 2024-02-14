@@ -62,8 +62,10 @@ router.get('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
         const task = topic.tasks.filter(task => {
             return task._id == _id
         });
-        
-        res.send(task[0])
+        if (task.length == 0) {
+            return res.status(404).send({ error: 'Invalid Id' })
+        }
+        res.send(task)
     } catch (err) {
         res.status(500).send()
     }
