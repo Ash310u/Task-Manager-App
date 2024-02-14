@@ -104,4 +104,30 @@ router.delete('/topics/:topic_id', auth, async (req, res) => {
     }
 })
 
+router.delete('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
+    const topic_id = req.params.topic_id
+    const _id = req.params.id
+
+    try {
+        const topic = await Topic.findOne({ _id : topic_id })
+        if (!topic) {
+            return res.status(404).send({ error: 'Invalid Topic Id'})
+        }
+
+        const tasks = topic.tasks.filter(task => {
+            return task._id != _id
+        });
+        if (topic.tasks.length === tasks.length) {
+            return res.status(404).send({ error: 'Invalid Task Id'})
+        }
+
+        topic.tasks = tasks
+        await topic.save()
+
+        res.send(topic)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
 module.exports = router
