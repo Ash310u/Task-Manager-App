@@ -25,7 +25,6 @@ router.get('/topics', auth, async (req, res) => {
         await req.user.populate('topics').execPopulate()
         res.send(req.user.topics)
     } catch (err) {
-        console.log(err)
         res.status(500).send()
     }
 })
