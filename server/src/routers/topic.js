@@ -4,7 +4,6 @@ const auth = require("../middleware/auth");
 
 const router = new express.Router()
 
-
 router.post("/topics", auth, async (req, res) => {
     const topic = new Topic({
         ...req.body,
@@ -29,16 +28,28 @@ router.get('/topics', auth, async (req, res) => {
     }
 })
 
-router.get('/tasks/:id', auth, async (req, res) => {
+router.get('/topics/:topic_id', auth, async (req, res) => {
+    const topic_id = req.params.topic_id
+
+    try {
+        const topic = await Topic.findOne({ _id : topic_id })
+        res.send(topic)
+    } catch (err) {
+        res.status(500).send()
+    }
+})
+
+router.get('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
+    const topic_id = req.params.topic_id
     const _id = req.params.id
 
     try {
-        const task = await Task.findOne({ _id, topic: req.topic._id })
-
-        if (!task) {
-            return res.status(404).send()
-        }
-        res.send(task)
+        const topic = await Topic.findOne({ _id : topic_id })
+        const task = topic.tasks.filter(task => {
+            return task._id == _id
+        });
+        
+        res.send(task[0])
     } catch (err) {
         res.status(500).send()
     }
