@@ -9,7 +9,7 @@ const LoginPage = () => {
     const [opacityInput, setOpacityInput] = useState(false)
     const [googlePing, setGooglePing] = useState(false)
 
-    // const [createAccount, results] = useCreateAccountMutation()
+    const [createAccount, results] = useCreateAccountMutation()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -19,7 +19,7 @@ const LoginPage = () => {
             email: e.target.email.value,
             password: e.target.password.value
         }
-        // createAccount(user)
+        createAccount(user)
     }
 
 
@@ -63,7 +63,7 @@ const LoginPage = () => {
                                     <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                                 </div>
                                 <div className=" h-20 flex flex-col justify-between items-center">
-                                    <Link to='/dashboard'>
+                                    <Link to='/'>
                                         <button
                                             className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                         >
