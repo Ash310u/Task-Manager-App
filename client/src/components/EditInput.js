@@ -14,7 +14,6 @@ function EditInput({ setIsInput }) {
         e.preventDefault();
         const topic = {title: e.target.topic.value}
         createTopic({ authToken, topic })
-        console.log(results.isSuccess)
     };
 
     const handleSetInput = () => {
