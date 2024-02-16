@@ -1,10 +1,13 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../Input";
-import { useCreateAccountMutation } from "../../store";
+import { useDispatch } from "react-redux";
+import { addUser, useCreateAccountMutation } from "../../store";
 import Link from "../Link"
 
 const LoginPage = () => {
+    const dispatch = useDispatch()
+
     const [opacityDiv, setOpacityDiv] = useState(false)
     const [opacityInput, setOpacityInput] = useState(false)
     const [googlePing, setGooglePing] = useState(false)
@@ -20,6 +23,10 @@ const LoginPage = () => {
             password: e.target.password.value
         }
         createAccount(user)
+    }
+
+    if (results.isSuccess) {
+        dispatch(addUser(results.data))
     }
 
 
@@ -63,7 +70,7 @@ const LoginPage = () => {
                                     <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                                 </div>
                                 <div className=" h-20 flex flex-col justify-between items-center">
-                                    <Link to='/'>
+                                    <Link to='/dashboard'>
                                         <button
                                             className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                         >
