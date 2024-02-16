@@ -8,11 +8,13 @@ const topicApi = createApi({
     endpoints(builder) {
         return {
             createTopic: builder.mutation({
-                query: (topic) => {
+                query: ({ authToken, topic }) => {
+                    const headers = { 'Authorization' : `Bearer ${authToken}`}
                     return {
                         url:'/topics',
                         method:'POST',
-                        body:topic
+                        headers,
+                        body: topic
                     }
                 }
             })
