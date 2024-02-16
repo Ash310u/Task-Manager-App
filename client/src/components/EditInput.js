@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useCreateTopicMutation } from "../store/index";
 
-function EditInput({ onSubmit, setIsInput }) {
+function EditInput({ setIsInput }) {
     const [value, setValue] = useState('');
+    const [ createTopic, results] = useCreateTopicMutation()
+
+    const authToken = useSelector(state => {
+        return state.userData.user?.token;
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit({
-            title: e.target.topic.value
-        })
+        const topic = {title: e.target.topic.value}
+        createTopic({ authToken, topic })
+        console.log(results.isSuccess)
     };
 
     const handleSetInput = () => {
