@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Input from "../Input";
 import { useDispatch } from "react-redux";
 import { addUser, useCreateAccountMutation } from "../../store";
-import Link from "../Link"
+import Link from "../SmallComps/Link"
 
 const LoginPage = () => {
     const dispatch = useDispatch()

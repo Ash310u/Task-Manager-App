@@ -1,4 +1,4 @@
-import Route from "./components/Route";
+import Route from "./components/SmallComps/Route";
 import DashboardPage from "./components/pages/DashboardPage";
 import LoginPage from "./components/pages/LoginPage";
 

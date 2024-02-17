@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useCreateTopicMutation } from "../store/index";
+import { useCreateTopicMutation } from "../../store/index";
 
 function EditInput({ setIsInput }) {
     const [value, setValue] = useState('');

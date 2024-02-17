@@ -1,6 +1,6 @@
-import Box from "../Box"
-import ControlPanel from "../ControlPanel"
-import Panel from "../Panel"
+import Box from "../SmallComps/Box"
+import ControlPanel from "../SmallComps/ControlPanel"
+import Panel from "../SmallComps/Panel"
 
 const DashboardPage = () => {
     return (

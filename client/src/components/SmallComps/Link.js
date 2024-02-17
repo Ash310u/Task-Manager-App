@@ -1,4 +1,4 @@
-import useNavigation from "../hooks/useNavigation";
+import useNavigation from "../../hooks/useNavigation";
 
 const Link = ({ to, children }) => {
 const { navigate } = useNavigation()
