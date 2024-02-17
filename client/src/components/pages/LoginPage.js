@@ -1,6 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
-import Input from "../Input";
+import Input from "../SmallComps/Input";
 import { useDispatch } from "react-redux";
 import { addUser, useCreateAccountMutation } from "../../store";
 import Link from "../SmallComps/Link"
