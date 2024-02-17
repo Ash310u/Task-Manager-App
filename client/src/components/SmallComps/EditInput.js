@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useCreateTopicMutation } from "../../store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { addTopic, useCreateTopicMutation } from "../../store/index";
 
 function EditInput({ setIsInput }) {
+    const dispatch = useDispatch()
+
     const [value, setValue] = useState('');
     const [ createTopic, results] = useCreateTopicMutation()
 
@@ -15,6 +17,10 @@ function EditInput({ setIsInput }) {
         const topic = {title: e.target.topic.value}
         createTopic({ authToken, topic })
     };
+
+    if (results.isSuccess) {
+        dispatch(addTopic(results.data))
+    }
 
     const handleSetInput = () => {
         setIsInput(true);
