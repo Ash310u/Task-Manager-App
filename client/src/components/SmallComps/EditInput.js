@@ -8,7 +8,7 @@ function EditInput({ setIsInput }) {
     const [value, setValue] = useState('');
     const [ createTopic, results] = useCreateTopicMutation()
 
-    const authToken = useSelector(state => {
+     const authToken = useSelector(state => {
         return state.userData.user?.token;
     })
 
@@ -16,14 +16,13 @@ function EditInput({ setIsInput }) {
         e.preventDefault();
         const topic = {title: e.target.topic.value}
         createTopic({ authToken, topic })
+        if (results.isSuccess) {
+            dispatch(addTopic(results.data))
+        }
     };
 
-    if (results.isSuccess) {
-        dispatch(addTopic(results.data))
-    }
-
     const handleSetInput = () => {
-        setIsInput(true);
+        setIsInput(false);
     }
 
     return (
@@ -34,7 +33,7 @@ function EditInput({ setIsInput }) {
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
-            <button onClick={() => handleSetInput()} className="bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>
+            <button onClick={handleSetInput} className="bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>
         </form>
     );
 }
