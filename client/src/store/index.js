@@ -8,7 +8,7 @@ import { topicReducer } from "./slices/topicSlice";
 const store = configureStore({
     reducer: {
         userData: userReducer,
-        topicData: topicReducer,
+        topicsData: topicReducer,
         [userApi.reducerPath]: userApi.reducer,
         [topicApi.reducerPath]: topicApi.reducer,
     },
