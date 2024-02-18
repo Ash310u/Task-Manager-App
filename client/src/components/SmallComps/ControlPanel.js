@@ -12,9 +12,8 @@ const ControlPanel = () => {
                 <StatusBox/>
                 <StatusBox/>
             </div>
-            <div onClick={() => setIsInput(true)}
-                className="flex flex-row items-center  gap-1 bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg pt-2 pb-2 pr-3 pl-3 " >
-                {isInput ? <EditInput setIsInput={setIsInput}  ></EditInput> : <button>New</button> && <MdAdd className="text-lg" />}
+            <div className="flex flex-row items-center  gap-1 bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg pt-2 pb-2 pr-3 pl-3 " >
+                {isInput ? <EditInput setIsInput={setIsInput}  ></EditInput> : <button onClick={() => setIsInput(true)} >New <MdAdd className="text-lg" /></button> }
             </div>
             {/* Style for hiding the scroll bar */}
             <style>
