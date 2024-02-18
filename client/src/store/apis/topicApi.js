@@ -1,20 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const topicApi = createApi({
-    reducerPath:'topic',
+    reducerPath: 'topic',
     baseQuery: fetchBaseQuery({
-        baseUrl:'http://localhost:3005'
+        baseUrl: 'http://localhost:3005'
     }),
     endpoints(builder) {
         return {
             createTopic: builder.mutation({
                 query: ({ authToken, topic }) => {
-                    const headers = { 'Authorization' : `Bearer ${authToken}`}
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url:'/topics',
-                        method:'POST',
+                        url: '/topics',
+                        method: 'POST',
                         headers,
                         body: topic
+                    }
+                }
+            }),
+            fetchTopic: builder.query({
+                query: ({authToken}) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    return {
+                        url: '/topics',
+                        method: 'GET',
+                        headers
                     }
                 }
             })
@@ -22,5 +32,5 @@ const topicApi = createApi({
     }
 })
 
-export const { useCreateTopicMutation } = topicApi;
+export const { useCreateTopicMutation, useFetchTopicQuery } = topicApi;
 export { topicApi };
