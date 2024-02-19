@@ -1,8 +1,8 @@
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../SmallComps/Input";
 import { useDispatch } from "react-redux";
-import { addUser, useCreateAccountMutation } from "../../store";
+import { addUser, useLoginAccountMutation } from "../../store";
 import Link from "../SmallComps/Link"
 
 const LoginPage = () => {
@@ -10,19 +10,19 @@ const LoginPage = () => {
 
     const [opacityDiv, setOpacityDiv] = useState(false)
     const [opacityInput, setOpacityInput] = useState(false)
-    const [googlePing, setGooglePing] = useState(false)
+    // const [googlePing, setGooglePing] = useState(false)
 
-    const [createAccount, results] = useCreateAccountMutation()
+    const [loginAccount, results] = useLoginAccountMutation()
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         let user = {
-            name: e.target.name.value,
+            // name: e.target.name.value,
             email: e.target.email.value,
             password: e.target.password.value
         }
-        createAccount(user)
+        loginAccount(user)
     }
 
     if (results.isSuccess) {
@@ -30,12 +30,12 @@ const LoginPage = () => {
     }
 
 
-    const handleClickPing = () => {
-        setGooglePing(true)
-        setTimeout(() => {
-            setGooglePing(false)
-        }, 500);
-    }
+    // const handleClickPing = () => {
+    //     setGooglePing(true)
+    //     setTimeout(() => {
+    //         setGooglePing(false)
+    //     }, 500);
+    // }
 
     useEffect(() => {
         const opacityPause = setTimeout(() => {
@@ -65,24 +65,23 @@ const LoginPage = () => {
                         <div className='flex flex-row justify-center items-center w-full h-full rounded-full'>
                             <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
                                 <div className="flex flex-col justify-between items-center gap-2 text-white ">
-                                    <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input>
+                                    {/* <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input> */}
                                     <Input name='email' type={'email'} placeholder={'Enter your email'} >Email</Input>
                                     <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                                 </div>
                                 <div className=" h-20 flex flex-col justify-between items-center">
-                                    <Link to='/dashboard'>
-                                        <button
-                                            className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
-                                        >
-                                            Sign In
-                                        </button>
-                                    </Link>
+
                                     <button
+                                        className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
+                                    >
+                                        <Link to='/dashboard'>Log in</Link>
+                                    </button>
+                                    {/* <button
                                         onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1  bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                     >
                                         <FcGoogle className={`${googlePing ? 'animate-ping' : 'animate-none'}`} />
                                         Sign In with Google
-                                    </button>
+                                    </button> */}
                                 </div>
                             </form>
 
