@@ -15,10 +15,19 @@ const userApi = createApi({
                         body:user
                     }
                 }
+            }),
+            loginAccount: builder.mutation({
+                query: (user) => {
+                    return {
+                        url:'/users/login',
+                        method:'POST',
+                        body:user
+                    }
+                }
             })
         }
     }
 })
 
-export const { useCreateAccountMutation } = userApi;
+export const { useCreateAccountMutation, useLoginAccountMutation } = userApi;
 export { userApi };
