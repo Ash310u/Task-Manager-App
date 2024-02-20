@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const topicSlice = createSlice({
-    name:'topicData',
+    name:'topicsData',
     initialState:[],
     reducers: {
         addTopic(state, action) {
-            state.push(action.payload);
+            state.push(...action.payload)
         }
     }
 })
