@@ -1,8 +1,9 @@
+import { AiOutlineLoading } from "react-icons/ai";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTopic, useCreateTopicMutation } from "../../store/index";
 
-function EditInput({ onSubmit }) {
+function EditInput() {
     const dispatch = useDispatch()
 
     const [value, setValue] = useState('');
@@ -17,8 +18,7 @@ function EditInput({ onSubmit }) {
         const topic = { title: e.target.topic.value }
         createTopic({ authToken, topic })    
         if (results.isSuccess) {
-            dispatch(addTopic(results.data))
-            onSubmit()
+            dispatch(addTopic([results.data]))
         }
     };  
 
@@ -31,7 +31,7 @@ function EditInput({ onSubmit }) {
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
-            <button className="bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>
+            {results.isLoading ? <AiOutlineLoading className="p-1 pl-2 pr-2 animate-spin" /> : <button className="bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>}
         </form>
     );
 }
