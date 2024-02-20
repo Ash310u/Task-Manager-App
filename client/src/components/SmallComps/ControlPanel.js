@@ -1,5 +1,3 @@
-import { MdAdd } from "react-icons/md";
-import { useState } from "react";   
 import StatusBox from "./StatusBox";
 import EditInput from './EditInput'
 
