@@ -8,6 +8,7 @@ const topicApi = createApi({
     endpoints(builder) {
         return {
             createTopic: builder.mutation({
+                invalidatesTags:['topic'],
                 query: ({ authToken, topic }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -19,7 +20,8 @@ const topicApi = createApi({
                 }
             }),
             fetchTopic: builder.query({
-                query: ({authToken}) => {
+                providesTags:['topic'],
+                query: (authToken) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
                         url: '/topics',
