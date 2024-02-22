@@ -7,6 +7,7 @@ function EditInput({addTopic}) {
         e.preventDefault();
         const topic = { title: e.target.topic.value }
         addTopic(topic)
+        setValue('')
     };  
 
     return (

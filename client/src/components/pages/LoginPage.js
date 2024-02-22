@@ -24,10 +24,10 @@ const LoginPage = () => {
             password: e.target.password.value
         }
         loginAccount(user)
-        if (results.isSuccess) {
-            dispatch(addUser(results.data))
-            navigate('/dashboard')
-        }
+    }
+    if (results.isSuccess) {
+        dispatch(addUser(results.data))
+        navigate('/dashboard')
     }
 
 
