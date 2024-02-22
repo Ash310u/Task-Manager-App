@@ -1,5 +1,5 @@
 // import { FcGoogle } from "react-icons/fc";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Input from "../SmallComps/Input";
 import { useDispatch } from "react-redux";
 import { addUser, useLoginAccountMutation } from "../../store";
@@ -25,12 +25,11 @@ const LoginPage = () => {
         }
         loginAccount(user)
     }
+
     if (results.isSuccess) {
-        dispatch(addUser(results.data))
+        dispatch(addUser(results.data));
         navigate('/dashboard')
     }
-
-
 
     // const handleClickPing = () => {
     //     setGooglePing(true)
