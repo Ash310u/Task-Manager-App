@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react'
 import Input from "../SmallComps/Input";
 import { useDispatch } from "react-redux";
 import { addUser, useLoginAccountMutation } from "../../store";
-import Link from "../SmallComps/Link"
+import useNavigation from '../../hooks/useNavigation'
 
 const LoginPage = () => {
     const dispatch = useDispatch()
+    const { navigate } = useNavigation()
 
     const [opacityDiv, setOpacityDiv] = useState(false)
     const [opacityInput, setOpacityInput] = useState(false)
@@ -23,11 +24,12 @@ const LoginPage = () => {
             password: e.target.password.value
         }
         loginAccount(user)
+        if (results.isSuccess) {
+            dispatch(addUser(results.data))
+            navigate('/dashboard')
+        }
     }
 
-    if (results.isSuccess) {
-        dispatch(addUser(results.data))
-    }
 
 
     // const handleClickPing = () => {
@@ -74,7 +76,7 @@ const LoginPage = () => {
                                     <button
                                         className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                     >
-                                        <Link to='/dashboard'>Log in</Link>
+                                        Log in
                                     </button>
                                     {/* <button
                                         onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1  bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
