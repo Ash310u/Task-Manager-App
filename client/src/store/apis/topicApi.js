@@ -29,10 +29,22 @@ const topicApi = createApi({
                         headers
                     }
                 }
+            }),
+            createTopicTask: builder.mutation({
+                invalidatesTags:['topic'],
+                query: ({authToken, topic, task}) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    return {
+                        url: `/topics/${topic._id}/tasks`,
+                        method: 'POST',
+                        body:task,
+                        headers
+                    }
+                }
             })
         }
     }
 })
 
-export const { useCreateTopicMutation, useFetchTopicQuery } = topicApi;
+export const { useCreateTopicMutation, useFetchTopicQuery, useCreateTopicTaskMutation} = topicApi;
 export { topicApi };
