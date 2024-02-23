@@ -15,11 +15,11 @@ function EditInput({addTopic}) {
             <input
                 required
                 name="topic"
-                className="bg-gray-950 bg-opacity-40 p-1 rounded-l-lg pl-3"
+                className="outline-none bg-gray-950 bg-opacity-40 p-1 rounded-l-lg pl-3"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
-            <button className="bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>
+            <button className="outline-none bg-gray-950 bg-opacity-40 p-1 pl-2 pr-2 rounded-r-lg">Add</button>
         </form>
     );
 }
