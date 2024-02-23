@@ -32,10 +32,10 @@ const topicApi = createApi({
             }),
             createTopicTask: builder.mutation({
                 invalidatesTags:['topic'],
-                query: ({authToken, topic, task}) => {
+                query: ({authToken, topic_id, task}) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url: `/topics/${topic._id}/tasks`,
+                        url: `/topics/${topic_id}/tasks`,
                         method: 'POST',
                         body:task,
                         headers
