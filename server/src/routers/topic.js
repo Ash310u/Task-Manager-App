@@ -22,7 +22,7 @@ router.post("/topics/:topic_id/tasks", auth, async (req, res) => {
     const topic_id = req.params.topic_id
     
     const topic = await Topic.findOne({ _id: topic_id })
-    topic.tasks.push(req.body)
+    topic?.tasks.push(req.body)
 
     try {
         await topic.save()
