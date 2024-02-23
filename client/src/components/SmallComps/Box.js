@@ -3,6 +3,7 @@ import { BiSolidEditAlt } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { RiCheckboxBlankCircleFill } from "react-icons/ri";
+import IconDiv from "./utilsComp/IconDiv";
 
 const Box = ({ children }) => {
     const [isChecked, setIsChecked] = useState(false)
@@ -23,13 +24,13 @@ const Box = ({ children }) => {
                     {children}
                 </p>
                 <div className="absolute right-5 hidden group-hover:block text-gray-50">
-                    <div className="flex flex-row justify-center items-center text-xl rounded-lg">
-                        <div className=" bg-black p-1.5 hover:bg-gray-800  rounded-l-lg">
+                    <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
+                        <IconDiv>
                             <BiSolidEditAlt />
-                        </div>
-                        <div className=" bg-black p-1.5 hover:bg-gray-800  rounded-r-lg">
+                        </IconDiv>
+                        <IconDiv>
                             <BsThreeDots />
-                        </div>
+                        </IconDiv>
                     </div>
                 </div>
             </div>
