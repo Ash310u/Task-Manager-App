@@ -15,6 +15,7 @@ function EditInput({addTopic}) {
             <input
                 required
                 name="topic"
+                maxLength={30}
                 className="outline-none bg-gray-950 bg-opacity-40 p-1 rounded-l-lg pl-3"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
