@@ -2,32 +2,51 @@ import { useSelector } from "react-redux"
 import Box from "../SmallComps/Box"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { useCreateTopicMutation, useFetchTopicQuery } from "../../store"
+import { useCreateTopicMutation, useCreateTopicTaskMutation, useFetchTopicQuery } from "../../store"
+import { useState } from "react"
 
 const DashboardPage = () => {
+    const [selectedTopicId, setSelectedTopicId] = useState('')
+
     const authToken = useSelector(state => {
         return state.userData.user?.token;
     })
+    
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
     const [createTopic] = useCreateTopicMutation()
-
+    const [createTopicTask] = useCreateTopicTaskMutation()
+    
     const handleAddTopic = (topic) => {
         createTopic({ authToken, topic })    
     }
-    
+    const handleAddTopicTask = (value) => {
+        createTopicTask({ 
+            authToken,
+            topic_id: selectedTopicId,
+            task: {
+                description: value
+            }
+        })    
+    }
+
     let content;
     if(error) {
         content = <div className="text-5xl opacity-50">404 Error</div>
     }
+
     if(isSuccess) {
         content = data.map((topic) => {
             const id = topic?._id
             const title = topic?.title
+            let tasks;        
+            if (topic.tasks) {
+                tasks = topic?.tasks.map((task) => {
+                    return <Box key={task._id}>{task.description}</Box>
+                })
+            }
             return (
-                <Panel key={id} header={title}>
-                        <Box>hello world</Box>
-                        <Box>hello world</Box>
-                        <Box>hello world</Box>
+                <Panel key={id} header={title} onClick={() => setSelectedTopicId(id)} onSubmit={handleAddTopicTask}>
+                    {tasks}
                 </Panel>
             )
         })
