@@ -71,6 +71,26 @@ router.get('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
     }
 })
 
+router.patch('/topics/:topic_id', auth, async (req, res) => {
+    if(!Object.keys(req.body) === 'title') {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+    const topic_id = req.params.topic_id
+
+    try {
+        const topic = await Topic.findOne({ _id : topic_id })
+        if (!topic) {
+            return res.status(404).send()
+        }
+        topic.title = req.body.title
+        await topic.save()
+
+        res.send(topic)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
 router.patch('/topics/:topic_id/tasks/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'completed']
