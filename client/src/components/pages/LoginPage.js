@@ -56,7 +56,7 @@ const LoginPage = () => {
             <div className="w-full h-full flex justify-center items-center overflow-hidden backdrop-blur">
                 <div
                     className={`
-                    relative rounded-full bg-login bg-fixed bg-center bg-no-repeat blur-none w-2/4 aspect-square
+                    relative rounded-full bg-login bg-cover bg-fixed bg-center bg-no-repeat blur-none w-2/4 aspect-square
                     transition-opacity duration-700 ease-in-out ${opacityDiv ? 'opacity-100' : ' opacity-0'}
                 `}
                 >
