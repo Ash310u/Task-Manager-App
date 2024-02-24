@@ -10,10 +10,13 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
     const [isEditVisible, setIsEditVisible] = useState(false)
 
     const [taskValue, setTaskValue] = useState('')
-    const [topicValue, setTopicValue] = useState(header)
+    const [topicValue, setTopicValue] = useState('')
 
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
+        if (!isEditVisible) {
+            setTopicValue(header)
+        }
     }
 
     const handleTopicInputChange = (e) => {
