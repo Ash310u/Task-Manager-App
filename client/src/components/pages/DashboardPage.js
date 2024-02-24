@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import Box from "../SmallComps/Box"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { useCreateTopicMutation, useCreateTopicTaskMutation, useFetchTopicQuery } from "../../store"
+import { useCreateTopicMutation, useCreateTopicTaskMutation, useFetchTopicQuery, useUpdateTopicMutation } from "../../store"
 import { useState } from "react"
 
 const DashboardPage = () => {
@@ -15,6 +15,7 @@ const DashboardPage = () => {
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
     const [createTopic] = useCreateTopicMutation()
     const [createTopicTask] = useCreateTopicTaskMutation()
+    const [updateTopic] = useUpdateTopicMutation()
     
     const handleAddTopic = (topic) => {
         createTopic({ authToken, topic })    
@@ -25,6 +26,15 @@ const DashboardPage = () => {
             topic_id: selectedTopicId,
             task: {
                 description: value
+            }
+        })    
+    }
+    const handleUpdateTopic = (value) => {
+        updateTopic({ 
+            authToken,
+            topic:{
+                _id:selectedTopicId,
+                title: value
             }
         })    
     }
@@ -45,7 +55,7 @@ const DashboardPage = () => {
                 })
             }
             return (
-                <Panel key={id} header={title} onClick={() => setSelectedTopicId(id)} onSubmit={handleAddTopicTask}>
+                <Panel key={id} header={title} onClick={() => setSelectedTopicId(id)} onTaskSubmit={handleAddTopicTask} onTopicSubmit={handleUpdateTopic}>
                     {tasks}
                 </Panel>
             )
