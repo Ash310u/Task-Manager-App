@@ -3,41 +3,48 @@ import { BiSolidEditAlt, BiSolidAddToQueue } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { BiX } from "react-icons/bi";
 import IconDiv from "./utilsComp/IconDiv";
+import InputOperation from "./utilsComp/InputOperation";
 
 const Panel = ({ header, children, onClick, onSubmit }) => {
     const [isInputVisible, setIsInputVisible] = useState(false)
-    const [value, setValue] = useState('')
-    
+    const [isEditVisible, setIsEditVisible] = useState(false)
+    const [taskValue, setTaskValue] = useState('')
+
     const handleAddInput = () => {
         setIsInputVisible(curr => !curr)
         if (!isInputVisible) {
-            setValue('')
+            setTaskValue('')
         }
     }
-    const handleInputClick = () => {
+
+    const handleTaskInputChange = (e) => {
+        setTaskValue(e.target.value)
+    }
+
+    const handleTaskInputClick = () => {
         onClick()
     }
 
-    const handleChange = (e) => {
-        setValue(e.target.value)
-    }
-    
-    const handleSubmitEnterPress = (e) => {
-        if(e.key === 'Enter') {
+    const handleTaskSubmitEnterPress = (e) => {
+        if (e.key === 'Enter') {
             e.preventDefault()
-            onSubmit(value)
+            onSubmit(taskValue)
             setIsInputVisible(false)
-            setValue('')
+            setTaskValue('')
         }
     }
 
+    const handleEditInput = () => {
+        setIsEditVisible(curr => !curr)
+    }
+
     return (
-        <div className="min-w-72 m-1">
+        <div className="w-72 m-1">
             <div className="pt-2 pb-2 pl-1 pr-1 flex flex-row justify-between items-center select-none">
-                <h3 className="text-lg">{header}</h3>
+                {isEditVisible ? <InputOperation className={"min-w-40 m-2 p-1.5 pl-2 text-sm"}/> : <h3 className="text-base font-light pr-1.5 pl-1.5 subpixel-antialiased break-words select-text overflow-hidden">{header}</h3>}
                 <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
-                    <IconDiv>
-                        <BiSolidEditAlt />
+                    <IconDiv onClick={handleEditInput}>
+                        {isEditVisible ? <BiX /> : <BiSolidEditAlt />}
                     </IconDiv>
                     <IconDiv onClick={handleAddInput}>
                         {isInputVisible ? <BiX /> : <BiSolidAddToQueue />}
@@ -47,19 +54,9 @@ const Panel = ({ header, children, onClick, onSubmit }) => {
                     </IconDiv>
                 </div>
             </div>
-            <div className="pb-4 pt-4 gap-2 flex flex-col items-center" onClick={handleInputClick}>
+            <div className="pb-4 pt-4 gap-2 flex flex-col items-center" onClick={handleTaskInputClick}>
                 {children}
-                {
-                    isInputVisible &&
-                    <input 
-                        type="text"
-                        placeholder="Add..."
-                        value={value}
-                        onChange={handleChange}
-                        onKeyPress={handleSubmitEnterPress}
-                        className="outline-none select-none ml-5 text-gray-50 min-w-64 max-h-min bg-gray-950 border-gray-950 backdrop-blur-lg bg-opacity-30 rounded-lg p-3" 
-                        />
-                }
+                {isInputVisible && <InputOperation value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
             </div>
         </div>
     )

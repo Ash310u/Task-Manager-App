@@ -20,7 +20,7 @@ const Box = ({ children }) => {
                 { isChecked ? <RiCheckboxBlankCircleFill /> : <RiCheckboxBlankCircleLine />}
             </div>
             <div className="min-w-64 max-h-min flex flex-row  items-center  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
-                <p className="text-gray-50 subpixel-antialiased break-words select-text ">
+                <p className="font-thin text-gray-50 subpixel-antialiased break-words select-text ">
                     {children}
                 </p>
                 <div className="absolute right-5 hidden group-hover:block text-gray-50">
