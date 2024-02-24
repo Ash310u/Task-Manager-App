@@ -7,18 +7,6 @@ const topicApi = createApi({
     }),
     endpoints(builder) {
         return {
-            createTopic: builder.mutation({
-                invalidatesTags:['topic'],
-                query: ({ authToken, topic }) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
-                    return {
-                        url: '/topics',
-                        method: 'POST',
-                        headers,
-                        body: topic
-                    }
-                }
-            }),
             fetchTopic: builder.query({
                 providesTags:['topic'],
                 query: (authToken) => {
@@ -30,14 +18,38 @@ const topicApi = createApi({
                     }
                 }
             }),
+            createTopic: builder.mutation({
+                invalidatesTags:['topic'],
+                query: ({ authToken, topic }) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    return {
+                        url: '/topics',
+                        method: 'POST',
+                        body: topic,
+                        headers
+                    }
+                }
+            }),
+            updateTopic: builder.mutation({
+                invalidatesTags:['topic'],
+                query: ({ authToken, topic }) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    return {
+                        url: `/topics/${topic._id}`,
+                        method: 'PATCH',
+                        body: topic,
+                        headers
+                    }
+                }
+            }),
             createTopicTask: builder.mutation({
                 invalidatesTags:['topic'],
-                query: ({authToken, topic_id, task}) => {
+                query: ({ authToken, topic_id, task }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
                         url: `/topics/${topic_id}/tasks`,
                         method: 'POST',
-                        body:task,
+                        body: task,
                         headers
                     }
                 }
@@ -46,5 +58,10 @@ const topicApi = createApi({
     }
 })
 
-export const { useCreateTopicMutation, useFetchTopicQuery, useCreateTopicTaskMutation} = topicApi;
+export const { 
+    useCreateTopicMutation, 
+    useFetchTopicQuery, 
+    useUpdateTopicMutation,
+    useCreateTopicTaskMutation
+    } = topicApi;
 export { topicApi };
