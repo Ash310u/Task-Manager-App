@@ -57,8 +57,8 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
     }
 
     return (
-        <div className="w-72 m-1 flex flex-col" onClick={handleInputClick}>
-            <div className="pt-2 pb-2 pl-1 pr-1 flex flex-row justify-between items-center select-none" >
+        <div className="w-80 m-1 flex flex-col" onClick={handleInputClick}>
+            <div className="w-72 h-14 p-2 flex flex-row justify-between items-center select-none gap-1  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg" >
                 {
                     isEditVisible ?
                         <InputOperation
