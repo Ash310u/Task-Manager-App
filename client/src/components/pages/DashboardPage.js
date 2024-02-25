@@ -67,7 +67,7 @@ const DashboardPage = () => {
             <div className="m-5">
                 <ControlPanel addTopic={handleAddTopic} />
             </div>
-            <div className="flex flex-row flex-4 gap-10 m-10 overflow-auto">
+            <div className="flex flex-row flex-4 gap-10 m-10 pl-10 pr-10 overflow-auto">
                 {content}
             </div>
             {/* Style for hiding the scroll bar */}
