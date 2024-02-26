@@ -62,7 +62,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
 
 
     return (
-        <div className="w-80 m-1 flex flex-col" onClick={handleInputClick}>
+        <div className="w-72 m-1 flex flex-col" onClick={handleInputClick}>
             <div className="w-72 h-14 p-2 flex flex-row justify-between items-center select-none gap-1  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg" >
                 {
                     isEditVisible ?
