@@ -64,7 +64,19 @@ const topicApi = createApi({
                         headers
                     }
                 }
-            })
+            }),
+            updateTopicTask: builder.mutation({
+                invalidatesTags:['topic'],
+                query: ({ authToken, topic_id, task_id, task }) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    return {
+                        url: `/topics/${topic_id}/tasks/${task_id}`,
+                        method: 'PATCH',
+                        body: task,
+                        headers
+                    }
+                }
+            }),
         }
     }
 })
@@ -74,6 +86,7 @@ export const {
     useFetchTopicQuery, 
     useUpdateTopicMutation,
     useDeleteTopicMutation,
-    useCreateTopicTaskMutation
+    useCreateTopicTaskMutation,
+    useUpdateTopicTaskMutation
     } = topicApi;
 export { topicApi };
