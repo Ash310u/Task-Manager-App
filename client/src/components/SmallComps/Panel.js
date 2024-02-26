@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { BiSolidEditAlt, BiSolidAddToQueue } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
+import { CgRemove } from "react-icons/cg";
 import { BiX } from "react-icons/bi";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 
-const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
+const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopicDelete }) => {
     const [isInputVisible, setIsInputVisible] = useState(false)
     const [isEditVisible, setIsEditVisible] = useState(false)
 
@@ -26,7 +26,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
     const handleTopicSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            onTopicSubmit(topicValue)
+            onTopicUpdate(topicValue)
             setIsEditVisible(false)
             setTopicValue('')
         }
@@ -52,9 +52,14 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
         }
     }
 
+    const handleDeleteTopic = () => {
+        onTopicDelete()
+    }
+
     const handleInputClick = () => {
         onClick()
     }
+
 
     return (
         <div className="w-80 m-1 flex flex-col" onClick={handleInputClick}>
@@ -77,8 +82,8 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicSubmit }) => {
                     <IconDiv onClick={handleAddInput}>
                         {isInputVisible ? <BiX /> : <BiSolidAddToQueue />}
                     </IconDiv>
-                    <IconDiv >
-                        <BsThreeDots />
+                    <IconDiv onClick={handleDeleteTopic}>
+                        <CgRemove />
                     </IconDiv>
                 </div>
             </div>
