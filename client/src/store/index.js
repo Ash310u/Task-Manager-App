@@ -24,5 +24,5 @@ setupListeners(store.dispatch);
 export { addUser } from './slices/userSlice'
 export { addTopic } from './slices/topicSlice'
 export { useCreateAccountMutation, useLoginAccountMutation } from './apis/userApi';
-export { useCreateTopicMutation, useFetchTopicQuery, useUpdateTopicMutation, useCreateTopicTaskMutation } from './apis/topicApi';
+export { useCreateTopicMutation, useFetchTopicQuery, useUpdateTopicMutation, useDeleteTopicMutation, useCreateTopicTaskMutation } from './apis/topicApi';
 export { store };
