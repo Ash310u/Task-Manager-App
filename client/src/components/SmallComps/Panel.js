@@ -6,29 +6,30 @@ import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 
 const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopicDelete }) => {
-    const [isInputVisible, setIsInputVisible] = useState(false)
     const [isEditVisible, setIsEditVisible] = useState(false)
+    const [isInputVisible, setIsInputVisible] = useState(false)
 
     const [taskValue, setTaskValue] = useState('')
-    const [topicValue, setTopicValue] = useState('')
+    const [newTopicValue, setNewTopicValue] = useState('')
 
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
         if (!isEditVisible) {
-            setTopicValue(header)
+            setNewTopicValue(header)
+            setIsInputVisible(false)
         }
     }
 
     const handleTopicInputChange = (e) => {
-        setTopicValue(e.target.value)
+        setNewTopicValue(e.target.value)
     }
 
     const handleTopicSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            onTopicUpdate(topicValue)
+            onTopicUpdate({newTopicValue, oldTopicValue: header})
             setIsEditVisible(false)
-            setTopicValue('')
+            setNewTopicValue('')
         }
     }
 
@@ -36,6 +37,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
         setIsInputVisible(curr => !curr)
         if (!isInputVisible) {
             setTaskValue('')
+            setIsEditVisible(false)
         }
     }
 
@@ -68,7 +70,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
                     isEditVisible ?
                         <InputOperation
                             maxLength={30}
-                            value={topicValue}
+                            value={newTopicValue}
                             onChange={handleTopicInputChange}
                             onKeyPress={handleTopicSubmitEnterPress}
                             className={"min-w-40 ml-0 mr-1 p-1 pl-1.5"}

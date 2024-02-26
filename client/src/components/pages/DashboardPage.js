@@ -30,14 +30,16 @@ const DashboardPage = () => {
             }
         })    
     }
-    const handleUpdateTopic = (value) => {
-        updateTopic({ 
-            authToken,
-            topic:{
-                _id:selectedTopicId,
-                title: value
-            }
-        })    
+    const handleUpdateTopic = ({newTopicValue, oldTopicValue}) => {
+        if (newTopicValue.toLowerCase() !== oldTopicValue.toLowerCase()) {
+            updateTopic({ 
+                authToken,
+                topic:{
+                    _id:selectedTopicId,
+                    title: newTopicValue
+                }
+            })    
+        }
     }
     
     const handleDeleteTopic = (id) => {
