@@ -2,72 +2,91 @@ import { useSelector } from "react-redux"
 import Box from "../SmallComps/Box"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useFetchTopicQuery, useUpdateTopicMutation } from "../../store"
+import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useFetchTopicQuery, useUpdateTopicMutation, useUpdateTopicTaskMutation } from "../../store"
 import { useState } from "react"
 
 const DashboardPage = () => {
     const [selectedTopicId, setSelectedTopicId] = useState('')
+    const [selectedTaskId, setSelectedTaskId] = useState('')
 
     const authToken = useSelector(state => {
         return state.userData.user?.token;
     })
-    
+
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
     const [createTopic] = useCreateTopicMutation()
-    const [createTopicTask] = useCreateTopicTaskMutation()
     const [updateTopic] = useUpdateTopicMutation()
     const [deleteTopic] = useDeleteTopicMutation()
-    
+    const [createTopicTask] = useCreateTopicTaskMutation()
+    const [updateTopicTask] = useUpdateTopicTaskMutation()
+
     const handleAddTopic = (topic) => {
-        createTopic({ authToken, topic })    
+        createTopic({ authToken, topic })
     }
     const handleAddTopicTask = (value) => {
-        createTopicTask({ 
+        createTopicTask({
             authToken,
             topic_id: selectedTopicId,
             task: {
                 description: value
             }
-        })    
+        })
     }
-    const handleUpdateTopic = ({newTopicValue, oldTopicValue}) => {
+
+    const handleUpdateTopic = ({ newTopicValue, oldTopicValue }) => {
         if (newTopicValue.toLowerCase() !== oldTopicValue.toLowerCase()) {
-            updateTopic({ 
+            updateTopic({
                 authToken,
-                topic:{
-                    _id:selectedTopicId,
+                topic: {
+                    _id: selectedTopicId,
                     title: newTopicValue
                 }
-            })    
+            })
         }
+    }
+    const handleUpdateTopicTaskChecker = ({topic_id, isChecked}) => {
+        updateTopicTask({
+            authToken,
+            topic_id,
+            task_id: selectedTaskId,
+            task: {
+                completed: isChecked
+            }
+        })
     }
     
     const handleDeleteTopic = (id) => {
         deleteTopic({
             authToken,
-            topic_id:id
+            topic_id: id
         })
     }
 
     let content;
-    if(error) {
+    if (error) {
         content = <div className="text-5xl opacity-50">404 Error</div>
     }
 
-    if(isSuccess) {
+    if (isSuccess) {
         content = data.map((topic) => {
             const id = topic?._id
             const title = topic?.title
-            let tasks;        
+            let tasks;
             if (topic.tasks) {
                 tasks = topic?.tasks.map((task) => {
-                    return <Box key={task._id}>{task.description}</Box>
+                    return <Box key={task._id}
+                        completed={task.completed}
+                        onClick={() => setSelectedTaskId(task._id)}
+                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({topic_id:id, isChecked})}
+                    >
+                        {task.description}
+                    </Box>
                 })
             }
             return (
-                <Panel key={id} header={title} 
+                <Panel key={id} header={title}
                     onClick={() => setSelectedTopicId(id)}
-                    onTaskSubmit={handleAddTopicTask} 
+                    onTaskSubmit={handleAddTopicTask}
                     onTopicUpdate={handleUpdateTopic}
                     onTopicDelete={() => handleDeleteTopic(id)}
                 >
