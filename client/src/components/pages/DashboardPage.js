@@ -7,7 +7,6 @@ import { useState } from "react"
 
 const DashboardPage = () => {
     const [selectedTopicId, setSelectedTopicId] = useState('')
-    const [selectedTaskId, setSelectedTaskId] = useState('')
 
     const authToken = useSelector(state => {
         return state.userData.user?.token;
@@ -44,11 +43,11 @@ const DashboardPage = () => {
             })
         }
     }
-    const handleUpdateTopicTaskChecker = ({topic_id, isChecked}) => {
+    const handleUpdateTopicTaskChecker = ({ topic_id, task_id, isChecked }) => {
         updateTopicTask({
             authToken,
             topic_id,
-            task_id: selectedTaskId,
+            task_id,
             task: {
                 completed: isChecked
             }
@@ -76,8 +75,7 @@ const DashboardPage = () => {
                 tasks = topic?.tasks.map((task) => {
                     return <Box key={task._id}
                         completed={task.completed}
-                        onClick={() => setSelectedTaskId(task._id)}
-                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({topic_id:id, isChecked})}
+                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id:id, task_id:task._id, isChecked })}
                     >
                         {task.description}
                     </Box>
