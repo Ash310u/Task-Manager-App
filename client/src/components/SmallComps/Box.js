@@ -5,18 +5,19 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
+import { CgRemove } from "react-icons/cg";
 
-const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
+const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate, onTaskDelete }) => {
     const [isChecked, setIsChecked] = useState(completed)
     const [isEditVisible, setIsEditVisible] = useState(false)
-    
+
     const [newTaskValue, setnewTaskValue] = useState(children)
-    
+
     const handleChecked = () => {
         onTaskCheckerUpdate(!isChecked)
         setIsChecked(curr => !curr)
     }
-    
+
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
     }
@@ -32,8 +33,10 @@ const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
             setnewTaskValue('')
         }
     }
-
-
+    
+    const handleDeleteTask = () => {
+        onTaskDelete()
+    }
 
     return (
         <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">
@@ -44,7 +47,7 @@ const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
                         : <IconDiv className='w-2 h-2 p-2.5 rounded-lg bg-gray-200 hover:bg-gray-200 hover:bg-opacity-10 backdrop-blur-lg bg-opacity-30' />
                 }
             </div>
-            <div className="min-w-64 max-h-min flex flex-row  items-center  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
+            <div className="min-w-64 max-h-min flex flex-row  items-center  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg  p-3 gap-2 overflow-hidden group ">
                 <p className={twMerge(`font-thin text-gray-50 subpixel-antialiased break-words select-text`, isChecked && 'line-through')}>
                     {
                         isEditVisible ?
@@ -52,7 +55,7 @@ const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
                                 value={newTaskValue}
                                 onChange={handleTaskInputChange}
                                 onKeyPress={handleTaskSubmitEnterPress}
-                                className={"min-w-30 w-36 ml-0 mr-1 p-0.5 pl-1.5"}
+                                className={"min-w-30 w-36 ml-0 mr-1 p-0 pl-1.5"}
                             /> : children}
                 </p>
                 <div className="absolute right-3 hidden group-hover:block text-gray-50">
@@ -60,8 +63,8 @@ const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
                         <IconDiv onClick={handleEditInput}>
                             {isEditVisible ? <BiX /> : <BiSolidEditAlt />}
                         </IconDiv>
-                        <IconDiv>
-                            <BsThreeDots />
+                        <IconDiv onClick={handleDeleteTask}>
+                            <CgRemove />
                         </IconDiv>
                     </div>
                 </div>
