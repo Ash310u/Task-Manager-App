@@ -1,21 +1,42 @@
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
-import { BiSolidEditAlt } from "react-icons/bi";
+import { BiSolidEditAlt, BiX } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import IconDiv from "./utilsComp/IconDiv";
+import InputOperation from "./utilsComp/InputOperation";
 
-const Box = ({ children, completed, onTaskCheckerUpdate }) => {
+const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate }) => {
     const [isChecked, setIsChecked] = useState(completed)
-
+    const [isEditVisible, setIsEditVisible] = useState(false)
+    
+    const [newTaskValue, setnewTaskValue] = useState(children)
+    
     const handleChecked = () => {
         onTaskCheckerUpdate(!isChecked)
         setIsChecked(curr => !curr)
     }
+    
+    const handleEditInput = () => {
+        setIsEditVisible(curr => !curr)
+    }
+    const handleTaskInputChange = (e) => {
+        setnewTaskValue(e.target.value)
+    }
+    const handleTaskSubmitEnterPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            onTaskUpdate(newTaskValue)
+            setIsEditVisible(false)
+            setIsChecked(false)
+            setnewTaskValue('')
+        }
+    }
+
 
 
     return (
-        <div  className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">
+        <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">
             <div className="bg-none text-lg text-gray-200 h-8 subpixel-antialiased rounded-full flex flex-col justify-center items-center" onClick={handleChecked} >
                 {
                     isChecked ?
@@ -25,12 +46,19 @@ const Box = ({ children, completed, onTaskCheckerUpdate }) => {
             </div>
             <div className="min-w-64 max-h-min flex flex-row  items-center  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg p-3 gap-2 overflow-hidden group ">
                 <p className={twMerge(`font-thin text-gray-50 subpixel-antialiased break-words select-text`, isChecked && 'line-through')}>
-                    {children}
+                    {
+                        isEditVisible ?
+                            <InputOperation
+                                value={newTaskValue}
+                                onChange={handleTaskInputChange}
+                                onKeyPress={handleTaskSubmitEnterPress}
+                                className={"min-w-30 w-36 ml-0 mr-1 p-0.5 pl-1.5"}
+                            /> : children}
                 </p>
-                <div className="absolute right-5 hidden group-hover:block text-gray-50">
+                <div className="absolute right-3 hidden group-hover:block text-gray-50">
                     <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
-                        <IconDiv>
-                            <BiSolidEditAlt />
+                        <IconDiv onClick={handleEditInput}>
+                            {isEditVisible ? <BiX /> : <BiSolidEditAlt />}
                         </IconDiv>
                         <IconDiv>
                             <BsThreeDots />
