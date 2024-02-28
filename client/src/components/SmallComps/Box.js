@@ -1,7 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { BiSolidEditAlt, BiX } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
@@ -33,7 +32,7 @@ const Box = ({ children, completed, onTaskCheckerUpdate, onTaskUpdate, onTaskDel
             setnewTaskValue('')
         }
     }
-    
+
     const handleDeleteTask = () => {
         onTaskDelete()
     }
