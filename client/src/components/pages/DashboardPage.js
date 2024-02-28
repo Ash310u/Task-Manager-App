@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import Box from "../SmallComps/Box"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useFetchTopicQuery, useUpdateTopicMutation, useUpdateTopicTaskMutation } from "../../store"
+import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useDeleteTopicTaskMutation, useFetchTopicQuery, useUpdateTopicMutation, useUpdateTopicTaskMutation } from "../../store"
 import { useState } from "react"
 
 const DashboardPage = () => {
@@ -18,6 +18,7 @@ const DashboardPage = () => {
     const [deleteTopic] = useDeleteTopicMutation()
     const [createTopicTask] = useCreateTopicTaskMutation()
     const [updateTopicTask] = useUpdateTopicTaskMutation()
+    const [deleteTopicTask] = useDeleteTopicTaskMutation()
 
     const handleAddTopic = (topic) => {
         createTopic({ authToken, topic })
@@ -73,6 +74,13 @@ const DashboardPage = () => {
             topic_id: id
         })
     }
+    const handleDeleteTopicTask = ({topic_id, task_id}) => {
+        deleteTopicTask({
+            authToken,
+            topic_id,
+            task_id
+        })
+    }
 
     let content;
     if (error) {
@@ -86,10 +94,12 @@ const DashboardPage = () => {
             let tasks;
             if (topic.tasks) {
                 tasks = topic?.tasks.map((task) => {
+                    const task_id = task._id
                     return <Box key={task._id}
                         completed={task.completed}
-                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id:id, task_id:task._id, isChecked })}
-                        onTaskUpdate={(newDescription) => handleUpdateTopicTask({ topic_id:id, task_id:task._id, newDescription, oldDescription:task.description })}
+                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id:id, task_id, isChecked })}
+                        onTaskUpdate={(newDescription) => handleUpdateTopicTask({ topic_id:id, task_id, newDescription, oldDescription:task.description })}
+                        onTaskDelete={() => handleDeleteTopicTask({ topic_id:id, task_id})}
                     >
                         {task.description}
                     </Box>
