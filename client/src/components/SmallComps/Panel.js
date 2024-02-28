@@ -72,7 +72,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
                             value={newTopicValue}
                             onChange={handleTopicInputChange}
                             onKeyPress={handleTopicSubmitEnterPress}
-                            className={"min-w-40 ml-0 mr-1 p-1 pl-1.5"}
+                            className={"min-w-40 ml-0 mr-1 p-1.5"}
                         />
                         : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{header}</h3>
                 }
