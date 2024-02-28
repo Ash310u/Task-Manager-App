@@ -30,6 +30,7 @@ export {
     useUpdateTopicMutation,
     useDeleteTopicMutation,
     useCreateTopicTaskMutation,
-    useUpdateTopicTaskMutation
+    useUpdateTopicTaskMutation,
+    useDeleteTopicTaskMutation
 } from './apis/topicApi';
 export { store };
