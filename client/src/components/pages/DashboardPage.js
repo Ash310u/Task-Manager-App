@@ -53,7 +53,20 @@ const DashboardPage = () => {
             }
         })
     }
-    
+    const handleUpdateTopicTask = ({ newDescription, oldDescription, topic_id, task_id }) => {
+        if (newDescription.toLowerCase() !== oldDescription.toLowerCase()) {
+            updateTopicTask({
+                authToken,
+                topic_id,
+                task_id,
+                task: {
+                    description: newDescription,
+                    completed: false,
+                }
+            })
+        }
+    }
+
     const handleDeleteTopic = (id) => {
         deleteTopic({
             authToken,
@@ -76,6 +89,7 @@ const DashboardPage = () => {
                     return <Box key={task._id}
                         completed={task.completed}
                         onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id:id, task_id:task._id, isChecked })}
+                        onTaskUpdate={(newDescription) => handleUpdateTopicTask({ topic_id:id, task_id:task._id, newDescription, oldDescription:task.description })}
                     >
                         {task.description}
                     </Box>
