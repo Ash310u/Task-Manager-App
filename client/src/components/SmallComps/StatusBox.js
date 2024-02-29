@@ -1,11 +1,11 @@
-const StatusBox = () => {
+const StatusBox = ({children, totalTasks, completedTasks}) => {
     return (
         <div className="flex flex-col min-w-32">
             <div className="">
-                Topic
+                {children}
             </div>
             <div className="max-h-6">
-                CompletedStatus
+                {completedTasks}/{totalTasks}
             </div>
         </div>
     )
