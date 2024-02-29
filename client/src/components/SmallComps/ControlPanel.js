@@ -4,7 +4,7 @@ import EditInput from './EditInput'
 const ControlPanel = ({ addTopic, data }) => {
 
     const statusContent = data.map((topic) => {
-        const { title, _id} = topic;
+        const { title, _id } = topic;
         const completedTask = topic?.tasks.filter((task) => {
             return task.completed === true;
         })
