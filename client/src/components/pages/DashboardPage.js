@@ -121,7 +121,7 @@ const DashboardPage = () => {
     return (
         <div className="w-screen h-screen flex flex-col p-10 backdrop-blur text-white overflow-auto">
             <div className="m-5">
-                <ControlPanel addTopic={handleAddTopic} />
+                {isSuccess && <ControlPanel addTopic={handleAddTopic} data={data} />}
             </div>
             <div className="flex flex-row flex-4 gap-10 m-10 pl-10 pr-10 overflow-auto">
                 {content}
