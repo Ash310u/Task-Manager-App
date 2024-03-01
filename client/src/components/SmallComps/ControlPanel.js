@@ -8,8 +8,10 @@ const ControlPanel = ({ addTopic, data }) => {
         const completedTask = topic?.tasks.filter((task) => {
             return task.completed === true;
         })
+        const taskCompletion = (completedTask.length/topic.tasks.length) * 100
+
         return (
-            <StatusBox key={_id} totalTasks={topic.tasks.length} completedTasks={completedTask.length}>
+            <StatusBox key={_id} percentage={taskCompletion}>
                 {title}
             </StatusBox>
         )
