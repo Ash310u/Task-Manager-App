@@ -34,7 +34,7 @@ const DashboardPage = () => {
     }
 
     const handleUpdateTopic = ({ newTopicValue, oldTopicValue }) => {
-        if (newTopicValue.toLowerCase() !== oldTopicValue.toLowerCase()) {
+        if (newTopicValue !== oldTopicValue) {
             updateTopic({
                 authToken,
                 topic: {
@@ -55,7 +55,7 @@ const DashboardPage = () => {
         })
     }
     const handleUpdateTopicTask = ({ newDescription, oldDescription, topic_id, task_id }) => {
-        if (newDescription.toLowerCase() !== oldDescription.toLowerCase()) {
+        if (newDescription !== oldDescription) {
             updateTopicTask({
                 authToken,
                 topic_id,
