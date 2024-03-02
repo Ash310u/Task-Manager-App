@@ -20,7 +20,7 @@ const ControlPanel = ({ addTopic, data }) => {
     })
 
     return (
-        <div className="flex flex-row items-center justify-around bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 p-2.5 gap-4 rounded-2xl ">
+        <div className="flex flex-row items-center justify-between bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 p-2.5 gap-4 rounded-2xl ">
             <div className="flex flex-row gap-2 overflow-auto items-center bg-opacity-40 rounded-3xl pr-3 pl-3 bg-gray-950 ">
                 {statusContent}
             </div>
