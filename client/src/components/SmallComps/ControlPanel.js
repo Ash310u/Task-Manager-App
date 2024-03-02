@@ -20,11 +20,11 @@ const ControlPanel = ({ addTopic, data }) => {
     })
 
     return (
-        <div className="flex flex-row items-center justify-around bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 p-4 gap-4 rounded-2xl">
-            <div className="flex flex-row gap-2 overflow-auto items-center bg-opacity-10 rounded-2xl">
+        <div className="flex flex-row items-center justify-around bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 p-2.5 gap-4 rounded-2xl ">
+            <div className="flex flex-row gap-2 overflow-auto items-center bg-opacity-40 rounded-3xl pr-3 pl-3 bg-gray-950 ">
                 {statusContent}
             </div>
-            <div className="flex flex-row items-center  gap-1 bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 pt-2 pb-2 pr-3 pl-3 rounded-2xl" >
+            <div className="flex flex-row items-center  gap-1 bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 pt-2 pb-2 pr-2 pl-2 rounded-3xl" >
                 <EditInput addTopic={addTopic}/> 
             </div>
             {/* Style for hiding the scroll bar */}
