@@ -1,12 +1,10 @@
 // import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../SmallComps/Input";
-import { useDispatch } from "react-redux";
-import { addUser, useLoginAccountMutation } from "../../store";
+import { useLoginAccountMutation } from "../../store";
 import useNavigation from '../../hooks/useNavigation'
 
 const LoginPage = () => {
-    const dispatch = useDispatch()
     const { navigate } = useNavigation()
 
     const [opacityDiv, setOpacityDiv] = useState(false)
@@ -27,7 +25,7 @@ const LoginPage = () => {
     }
 
     if (results.isSuccess) {
-        dispatch(addUser(results.data));
+        window.localStorage.setItem('authToken', results.data.token)
         navigate('/dashboard')
     }
 

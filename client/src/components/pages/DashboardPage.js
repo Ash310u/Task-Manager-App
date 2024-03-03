@@ -1,17 +1,13 @@
-import { useSelector } from "react-redux"
 import Box from "../SmallComps/Box"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
 import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useDeleteTopicTaskMutation, useFetchTopicQuery, useUpdateTopicMutation, useUpdateTopicTaskMutation } from "../../store"
 import { useState } from "react"
-import Profile from "../SmallComps/Profile"
 
 const DashboardPage = () => {
     const [selectedTopicId, setSelectedTopicId] = useState('')
 
-    const authToken = useSelector(state => {
-        return state.userData.user?.token;
-    })
+    const authToken = window.localStorage.getItem('authToken')
 
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
     const [createTopic] = useCreateTopicMutation()
@@ -75,7 +71,7 @@ const DashboardPage = () => {
             topic_id: id
         })
     }
-    const handleDeleteTopicTask = ({topic_id, task_id}) => {
+    const handleDeleteTopicTask = ({ topic_id, task_id }) => {
         deleteTopicTask({
             authToken,
             topic_id,
@@ -98,9 +94,9 @@ const DashboardPage = () => {
                     const task_id = task._id
                     return <Box key={task._id}
                         completed={task.completed}
-                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id:id, task_id, isChecked })}
-                        onTaskUpdate={(newDescription) => handleUpdateTopicTask({ topic_id:id, task_id, newDescription, oldDescription:task.description })}
-                        onTaskDelete={() => handleDeleteTopicTask({ topic_id:id, task_id})}
+                        onTaskCheckerUpdate={(isChecked) => handleUpdateTopicTaskChecker({ topic_id: id, task_id, isChecked })}
+                        onTaskUpdate={(newDescription) => handleUpdateTopicTask({ topic_id: id, task_id, newDescription, oldDescription: task.description })}
+                        onTaskDelete={() => handleDeleteTopicTask({ topic_id: id, task_id })}
                     >
                         {task.description}
                     </Box>
@@ -121,9 +117,6 @@ const DashboardPage = () => {
 
     return (
         <div className="w-screen h-screen flex flex-col p-10 backdrop-blur text-white overflow-auto">
-            <div className="flex flex-row-reverse items-center">
-                <Profile/>
-            </div>
             <div className="m-5">
                 {isSuccess && <ControlPanel addTopic={handleAddTopic} data={data} />}
             </div>
