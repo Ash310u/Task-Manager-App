@@ -4,6 +4,7 @@ import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
 import { useCreateTopicMutation, useCreateTopicTaskMutation, useDeleteTopicMutation, useDeleteTopicTaskMutation, useFetchTopicQuery, useUpdateTopicMutation, useUpdateTopicTaskMutation } from "../../store"
 import { useState } from "react"
+import Profile from "../SmallComps/Profile"
 
 const DashboardPage = () => {
     const [selectedTopicId, setSelectedTopicId] = useState('')
@@ -120,6 +121,9 @@ const DashboardPage = () => {
 
     return (
         <div className="w-screen h-screen flex flex-col p-10 backdrop-blur text-white overflow-auto">
+            <div className="flex flex-row-reverse items-center">
+                <Profile/>
+            </div>
             <div className="m-5">
                 {isSuccess && <ControlPanel addTopic={handleAddTopic} data={data} />}
             </div>
