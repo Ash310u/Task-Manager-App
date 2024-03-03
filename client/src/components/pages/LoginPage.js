@@ -1,23 +1,28 @@
 // import { FcGoogle } from "react-icons/fc";
 import { useState, useEffect } from 'react'
 import Input from "../SmallComps/Input";
-import { useLoginAccountMutation } from "../../store";
+import { useCreateAccountMutation } from "../../store";
 import useNavigation from '../../hooks/useNavigation'
 
 const LoginPage = () => {
     const { navigate } = useNavigation()
+    const authToken =window.localStorage.getItem('authToken')
+    
+    if(authToken) {
+        navigate('/dashboard')
+    }
 
     const [opacityDiv, setOpacityDiv] = useState(false)
     const [opacityInput, setOpacityInput] = useState(false)
     // const [googlePing, setGooglePing] = useState(false)
 
-    const [loginAccount, results] = useLoginAccountMutation()
+    const [loginAccount, results] = useCreateAccountMutation()
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         let user = {
-            // name: e.target.name.value,
+            name: e.target.name.value,
             email: e.target.email.value,
             password: e.target.password.value
         }
@@ -64,7 +69,7 @@ const LoginPage = () => {
                         <div className='flex flex-row justify-center items-center w-full h-full rounded-full'>
                             <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
                                 <div className="flex flex-col justify-between items-center gap-2 text-white ">
-                                    {/* <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input> */}
+                                    <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input>
                                     <Input name='email' type={'email'} placeholder={'Enter your email'} >Email</Input>
                                     <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                                 </div>
@@ -73,7 +78,7 @@ const LoginPage = () => {
                                     <button
                                         className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                     >
-                                        Log in
+                                        Sign in
                                     </button>
                                     {/* <button
                                         onClick={handleClickPing} className=' flex flex-row justify-center items-center gap-2 w-72 p-1  bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
