@@ -9,7 +9,7 @@ const topicRouter = require('./routers/topic');
 const app = express();
 
 app.use(cors({
-    origin:'http://localhost:3000'
+    origin:'https://task-manager-app-gilt-three.vercel.app'
 }));
 app.use(express.json());
 app.use(topicRouter)
