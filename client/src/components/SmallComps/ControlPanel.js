@@ -1,8 +1,15 @@
 import StatusBox from "./StatusBox";
 import EditInput from './EditInput'
+import { useCreateTopicMutation } from "../../store";
 
-const ControlPanel = ({ addTopic, data }) => {
+const ControlPanel = ({ data }) => {
+    const authToken = window.localStorage.getItem('authToken')
 
+    const [createTopic] = useCreateTopicMutation()
+
+    const handleAddTopic = (topic) => {
+            createTopic({ authToken, topic })
+        }
     const statusContent = data.map((topic) => {
         const { title, _id } = topic;
         const completedTask = topic?.tasks.filter((task) => {
@@ -25,7 +32,7 @@ const ControlPanel = ({ addTopic, data }) => {
                 {statusContent}
             </div>
             <div className="flex flex-row items-center  gap-1 bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 p-2 pr-1 pl-1 rounded-3xl" >
-                <EditInput addTopic={addTopic}/> 
+                <EditInput addTopic={handleAddTopic}/> 
             </div>
             {/* Style for hiding the scroll bar */}
             <style>

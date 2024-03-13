@@ -4,13 +4,21 @@ import { CgRemove } from "react-icons/cg";
 import { BiX } from "react-icons/bi";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
+import { useCreateTopicTaskMutation, useDeleteTopicMutation, useUpdateTopicMutation } from "../../store";
+import Box from "./Box";
 
-const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopicDelete }) => {
+const Panel = ({ topic }) => {
     const [isEditVisible, setIsEditVisible] = useState(false)
     const [isInputVisible, setIsInputVisible] = useState(false)
 
     const [taskValue, setTaskValue] = useState('')
-    const [newTopicValue, setNewTopicValue] = useState(header)
+    const [newTopicValue, setNewTopicValue] = useState(topic.title)
+
+    const authToken = window.localStorage.getItem('authToken')
+
+    const [updateTopic] = useUpdateTopicMutation()
+    const [deleteTopic] = useDeleteTopicMutation()
+    const [createTopicTask] = useCreateTopicTaskMutation()
 
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
@@ -26,7 +34,15 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
     const handleTopicSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            onTopicUpdate({newTopicValue, oldTopicValue: header})
+            if (newTopicValue !== topic.title) {
+                updateTopic({
+                    authToken,
+                    topic: {
+                        _id: topic._id,
+                        title: newTopicValue
+                    }
+                })
+            }
             setIsEditVisible(false)
             setNewTopicValue('')
         }
@@ -47,23 +63,35 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
     const handleTaskSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            onTaskSubmit(taskValue)
+            createTopicTask({
+                authToken,
+                topic_id: topic._id,
+                task: {
+                    description: taskValue
+                }
+            })
             setIsInputVisible(false)
             setTaskValue('')
         }
     }
 
     const handleDeleteTopic = () => {
-        onTopicDelete()
+        deleteTopic({
+            authToken,
+            topic_id: topic._id
+        })
     }
 
-    const handleInputClick = () => {
-        onClick()
+    let tasks;
+    if (topic.tasks) {
+        tasks = topic?.tasks.map((task) => {
+            return <Box key={task._id} task={task} topic_id={topic._id} />
+        })
     }
 
 
     return (
-        <div className="w-72 m-1 flex flex-col" onClick={handleInputClick}>
+        <div className="w-72 m-1 flex flex-col">
             <div className="w-72 h-14 p-2 flex flex-row justify-between items-center select-none gap-1  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg" >
                 {
                     isEditVisible ?
@@ -74,7 +102,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
                             onKeyPress={handleTopicSubmitEnterPress}
                             className={"min-w-40 ml-0 mr-1 p-1.5"}
                         />
-                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{header}</h3>
+                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic.title}</h3>
                 }
                 <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
                     <IconDiv onClick={handleEditInput}>
@@ -89,7 +117,7 @@ const Panel = ({ header, children, onClick, onTaskSubmit, onTopicUpdate, onTopic
                 </div>
             </div>
             <div className="pb-4 pt-4 gap-2 flex flex-col items-center">
-                {children}
+                {tasks}
                 {isInputVisible && <InputOperation value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
             </div>
         </div>
