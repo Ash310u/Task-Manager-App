@@ -2,17 +2,27 @@ import { useState } from "react";
 import { BiSolidEditAlt, BiSolidAddToQueue } from "react-icons/bi";
 import { CgRemove } from "react-icons/cg";
 import { BiX } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 import { useCreateTopicTaskMutation, useDeleteTopicMutation, useUpdateTopicMutation } from "../../store";
 import Box from "./Box";
 
-const Panel = ({ topic }) => {
+const Panel = ({ topic_id }) => {
+    // const dispatch = useDispatch()
+    const { topics } = useSelector((state) => {
+        return state.topicSlice
+    })
+
+    const topic = topics.filter((topic) => {
+        return topic._id === topic_id
+    })
+
     const [isEditVisible, setIsEditVisible] = useState(false)
     const [isInputVisible, setIsInputVisible] = useState(false)
 
     const [taskValue, setTaskValue] = useState('')
-    const [newTopicValue, setNewTopicValue] = useState(topic.title)
+    const [newTopicValue, setNewTopicValue] = useState(topic[0]?.title)
 
     const authToken = window.localStorage.getItem('authToken')
 
@@ -34,11 +44,11 @@ const Panel = ({ topic }) => {
     const handleTopicSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            if (newTopicValue !== topic.title) {
+            if (newTopicValue !== topic[0]?.title) {
                 updateTopic({
                     authToken,
                     topic: {
-                        _id: topic._id,
+                        _id: topic_id,
                         title: newTopicValue
                     }
                 })
@@ -65,7 +75,7 @@ const Panel = ({ topic }) => {
             e.preventDefault()
             createTopicTask({
                 authToken,
-                topic_id: topic._id,
+                topic_id: topic_id,
                 task: {
                     description: taskValue
                 }
@@ -78,14 +88,14 @@ const Panel = ({ topic }) => {
     const handleDeleteTopic = () => {
         deleteTopic({
             authToken,
-            topic_id: topic._id
+            topic_id: topic_id
         })
     }
 
     let tasks;
-    if (topic.tasks) {
+    if (topic?.tasks) {
         tasks = topic?.tasks.map((task) => {
-            return <Box key={task._id} task={task} topic_id={topic._id} />
+            return <Box key={task._id} task={task} topic_id={topic_id} />
         })
     }
 
@@ -102,7 +112,7 @@ const Panel = ({ topic }) => {
                             onKeyPress={handleTopicSubmitEnterPress}
                             className={"min-w-40 ml-0 mr-1 p-1.5"}
                         />
-                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic.title}</h3>
+                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic[0]?.title}</h3>
                 }
                 <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
                     <IconDiv onClick={handleEditInput}>
