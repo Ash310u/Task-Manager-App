@@ -23,7 +23,7 @@ const Box = ({ task, topic_id }) => {
                 authToken,
                 topic_id,
                 task_id: task._id,
-                task: {     
+                task: {
                     completed: !isChecked
                 }
             })
