@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "./apis/userApi";
 import { topicApi } from "./apis/topicApi";
+import { topicReducer } from "./slices/topicSlice";
 
 const store = configureStore({
     reducer: {
+        topicSlice: topicReducer,
         [userApi.reducerPath]: userApi.reducer,
         [topicApi.reducerPath]: topicApi.reducer,
     },
@@ -17,6 +19,7 @@ const store = configureStore({
 
 setupListeners(store.dispatch);
 
+export { stateAddTopics } from "./slices/topicSlice"
 export { useCreateAccountMutation, useLoginAccountMutation } from './apis/userApi';
 export {
     useCreateTopicMutation,
