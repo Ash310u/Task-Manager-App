@@ -1,21 +1,34 @@
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { useFetchTopicQuery } from "../../store"
+import { stateAddTopics, useFetchTopicQuery } from "../../store"
 
 const DashboardPage = () => {
+    const dispatch = useDispatch()
+    const { topics } = useSelector((state) => {
+        return state.topicSlice
+    })
+
     const authToken = window.localStorage.getItem('authToken')
 
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
 
+
+    useEffect(() => {
+        if(isSuccess) {
+            dispatch(stateAddTopics(data))
+        }
+    },[data, dispatch])
+
     let content;
     if (error) {
-        content = <div className="text-5xl opacity-50">404 Error</div>
+        content = <div className="text-5xl opacity-50">Please Logged In First</div>
     }
-
     if (isSuccess) {
-        content = data.map((topic) => {
+        content = topics.map((topic) => {
             return (
-                <Panel key={topic._id} topic={topic} />
+                <Panel key={topic._id} topic_id={topic._id} />
             )
         })
     }
