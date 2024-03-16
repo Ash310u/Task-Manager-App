@@ -4,6 +4,7 @@ const topicSlice = createSlice({
     name: 'topic',
     initialState: {
         topics: [],
+        tasks:[]
     },
     reducers: {
         stateAddManyTopic(state, action) {
@@ -32,6 +33,11 @@ const topicSlice = createSlice({
                 }
             });
         },
+        stateAddManyTask(state, action) {
+            if(!state.tasks.includes(action.payload)) {
+                state.tasks.push(...action.payload)
+            }
+        },
     }
 })
 
@@ -40,6 +46,7 @@ export const {
     stateAddTopic,
     stateUpdateTopic,
     stateRemoveTopic,
-    stateCreateTopicTask
+    stateCreateTopicTask,
+    stateAddManyTask
 } = topicSlice.actions;
 export const topicReducer = topicSlice.reducer;
