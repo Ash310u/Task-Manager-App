@@ -24,7 +24,8 @@ export {
     stateAddTopic,
     stateUpdateTopic,
     stateRemoveTopic,
-    stateCreateTopicTask
+    stateCreateTopicTask,
+    stateAddManyTask
 } from "./slices/topicSlice"
 export { useCreateAccountMutation, useLoginAccountMutation } from './apis/userApi';
 export {
