@@ -19,7 +19,13 @@ const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export { stateAddTopics } from "./slices/topicSlice"
+export {
+    stateAddManyTopic,
+    stateAddTopic,
+    stateUpdateTopic,
+    stateRemoveTopic,
+    stateCreateTopicTask
+} from "./slices/topicSlice"
 export { useCreateAccountMutation, useLoginAccountMutation } from './apis/userApi';
 export {
     useCreateTopicMutation,

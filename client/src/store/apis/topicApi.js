@@ -3,12 +3,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const topicApi = createApi({
     reducerPath: 'topic',
     baseQuery: fetchBaseQuery({
+        // baseUrl:'http://localhost:3005/'
         baseUrl:process.env.REACT_APP_API_BASE_URL
     }),
     endpoints(builder) {
         return {
             fetchTopic: builder.query({
-                providesTags:['topic'],
                 query: (authToken) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -19,7 +19,6 @@ const topicApi = createApi({
                 }
             }),
             createTopic: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -31,7 +30,6 @@ const topicApi = createApi({
                 }
             }),
             updateTopic: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -43,7 +41,6 @@ const topicApi = createApi({
                 }
             }),
             deleteTopic: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic_id }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -54,7 +51,6 @@ const topicApi = createApi({
                 }
             }),
             createTopicTask: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic_id, task }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -66,7 +62,6 @@ const topicApi = createApi({
                 }
             }),
             updateTopicTask: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic_id, task_id, task }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
@@ -78,7 +73,6 @@ const topicApi = createApi({
                 }
             }),
             deleteTopicTask: builder.mutation({
-                invalidatesTags:['topic'],
                 query: ({ authToken, topic_id, task_id }) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
