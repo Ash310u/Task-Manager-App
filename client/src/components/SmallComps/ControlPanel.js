@@ -1,11 +1,20 @@
 import StatusBox from "./StatusBox";
 import EditInput from './EditInput'
-import { useCreateTopicMutation } from "../../store";
+import { stateAddTopic, useCreateTopicMutation } from "../../store";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const ControlPanel = ({ data }) => {
+    const dispatch = useDispatch()
     const authToken = window.localStorage.getItem('authToken')
 
-    const [createTopic] = useCreateTopicMutation()
+    const [createTopic, results] = useCreateTopicMutation()
+
+    useEffect(() => {
+        if(results.isSuccess) {
+            dispatch(stateAddTopic(results.data))
+        }
+    },[results.data, dispatch])
 
     const handleAddTopic = (topic) => {
             createTopic({ authToken, topic })

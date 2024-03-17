@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { stateAddTopics, useFetchTopicQuery } from "../../store"
+import { stateAddManyTopic, useFetchTopicQuery } from "../../store"
 
 const DashboardPage = () => {
     const dispatch = useDispatch()
@@ -14,10 +14,9 @@ const DashboardPage = () => {
 
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
 
-
     useEffect(() => {
         if(isSuccess) {
-            dispatch(stateAddTopics(data))
+            dispatch(stateAddManyTopic(data))
         }
     },[data, dispatch])
 
@@ -27,16 +26,14 @@ const DashboardPage = () => {
     }
     if (isSuccess) {
         content = topics.map((topic) => {
-            return (
-                <Panel key={topic._id} topic_id={topic._id} />
-            )
+            return <Panel key={topic._id} topic={topic} />
         })
     }
 
     return (
         <div className="w-screen h-screen flex flex-col p-10 backdrop-blur text-white overflow-auto">
             <div className="m-5">
-                {isSuccess && <ControlPanel data={data} />}
+                {isSuccess && <ControlPanel data={topics} />}
             </div>
             <div className="flex flex-row flex-4 gap-10 m-10 pl-10 pr-10 overflow-auto">
                 {content}
