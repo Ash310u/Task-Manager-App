@@ -26,7 +26,6 @@ const topicSlice = createSlice({
             state.topics = filteredTopics;
         },
         stateCreateTopicTask(state, action) {
-            console.log(action.payload)
             state.topics.forEach(topic => {
                 if(topic._id === action.payload.topic_id) {
                     topic.tasks.push(action.payload.task) 
