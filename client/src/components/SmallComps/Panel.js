@@ -2,24 +2,31 @@ import { useEffect, useState } from "react";
 import { BiSolidEditAlt, BiSolidAddToQueue } from "react-icons/bi";
 import { CgRemove } from "react-icons/cg";
 import { BiX } from "react-icons/bi";
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
-import { stateAddManyTask, stateCreateTopicTask, stateRemoveTopic, stateUpdateTopic, useCreateTopicTaskMutation, useDeleteTopicMutation, useUpdateTopicMutation } from "../../store";
+import { stateCreateTopicTask, stateRemoveTopic, stateUpdateTopic, useCreateTopicTaskMutation, useDeleteTopicMutation, useUpdateTopicMutation } from "../../store";
 import Box from "./Box";
 
-const Panel = ({ topic }) => {
+const Panel = ({ topic_id, title }) => {
     const [isEditVisible, setIsEditVisible] = useState(false)
     const [isInputVisible, setIsInputVisible] = useState(false)
 
     const dispatch = useDispatch()
+    const { topics } = useSelector((state) => {
+        return state.topicSlice
+    })
 
+    const topic = topics.filter((topic) => {
+        return topic._id === topic_id
+    })
+    
     const [taskValue, setTaskValue] = useState('')
-    const [newTopicValue, setNewTopicValue] = useState(topic?.title)
+    const [newTopicValue, setNewTopicValue] = useState(title)
 
     const authToken = window.localStorage.getItem('authToken')
 
-    const [updateTopic] = useUpdateTopicMutation()
+    const [updateTopic, updateResults] = useUpdateTopicMutation()
     const [deleteTopic, deleteResults] = useDeleteTopicMutation()
     const [createTopicTask, createResults] = useCreateTopicTaskMutation()
 
@@ -37,23 +44,28 @@ const Panel = ({ topic }) => {
     const handleTopicSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            if (newTopicValue !== topic?.title) {
+            if (newTopicValue !== title) {
                 updateTopic({
                     authToken,
                     topic: {
-                        _id: topic._id,
+                        _id: topic_id,
                         title: newTopicValue
                     }
                 })
             }
-            dispatch(stateUpdateTopic({
-                _id: topic._id,
-                title: newTopicValue
-            }))
             setIsEditVisible(false)
             setNewTopicValue('')
         }
     }
+
+    useEffect(() => {
+        if (updateResults.isSuccess) {
+            dispatch(stateUpdateTopic({
+                _id: topic_id,
+                title: updateResults.data.title
+            }))
+        }
+    }, [updateResults.data, dispatch])
 
     const handleAddInput = () => {
         setIsInputVisible(curr => !curr)
@@ -72,7 +84,7 @@ const Panel = ({ topic }) => {
             e.preventDefault()
             createTopicTask({
                 authToken,
-                topic_id: topic._id,
+                topic_id,
                 task: {
                     description: taskValue
                 }
@@ -86,28 +98,27 @@ const Panel = ({ topic }) => {
         if (createResults.isSuccess) {
             const { tasks } = createResults.data
             dispatch(stateCreateTopicTask({
-                topic_id: topic._id,
+                topic_id,
                 task: tasks[tasks.length - 1]
             }))
-            dispatch(stateAddManyTask([tasks[tasks.length - 1]]))
         }
     }, [createResults.data, dispatch])
 
     const handleDeleteTopic = () => {
         deleteTopic({
             authToken,
-            topic_id: topic._id
+            topic_id
         })
     }
 
     if (deleteResults.isSuccess) {
-        dispatch(stateRemoveTopic(topic._id))
+        dispatch(stateRemoveTopic(topic_id))
     }
 
     let tasks;
-    if (topic?.tasks) {
-        tasks = topic?.tasks.map((task) => {
-            return <Box key={task._id} task={task} topic_id={topic._id} />
+    if (topic[0]?.tasks) {
+        tasks = topic[0]?.tasks.map((task) => {
+            return <Box key={task._id} task={task} topic_id={topic_id} />
         })
     }
 
@@ -124,7 +135,7 @@ const Panel = ({ topic }) => {
                             onKeyPress={handleTopicSubmitEnterPress}
                             className={"min-w-40 ml-0 mr-1 p-1.5"}
                         />
-                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic?.title}</h3>
+                        : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic[0]?.title}</h3>
                 }
                 <div className="gap-1 flex flex-row justify-center items-center text-xl rounded-lg">
                     <IconDiv onClick={handleEditInput}>
