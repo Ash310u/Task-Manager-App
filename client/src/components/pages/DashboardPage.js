@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import ControlPanel from "../SmallComps/ControlPanel"
 import Panel from "../SmallComps/Panel"
-import { stateAddManyTask, stateAddManyTopic, useFetchTopicQuery } from "../../store"
+import { stateAddManyTopic, useFetchTopicQuery } from "../../store"
 
 const DashboardPage = () => {
     const dispatch = useDispatch()
-    const { topics, tasks } = useSelector((state) => {
+    const { topics } = useSelector((state) => {
         return state.topicSlice
     })
-    console.log(tasks)
+
     const authToken = window.localStorage.getItem('authToken')
 
     const { data, error, isSuccess } = useFetchTopicQuery(authToken)
@@ -17,14 +17,6 @@ const DashboardPage = () => {
     useEffect(() => {
         if(isSuccess) {
             dispatch(stateAddManyTopic(data))
-            data.forEach(topic=> {
-                if (!tasks.includes(topic?.tasks)) {
-                    let tasks = topic?.tasks.map(task => {
-                        return task
-                    })
-                    dispatch(stateAddManyTask(tasks))
-                }
-            });
         }
     },[data, dispatch])
 
@@ -33,9 +25,10 @@ const DashboardPage = () => {
         content = <div className="text-5xl opacity-50">Please Logged In First</div>
     }
     if (isSuccess) {
-
         content = topics.map((topic) => {
-            return <Panel key={topic._id} topic={topic} />
+            const title = topic.title
+            const id = topic._id
+            return <Panel key={id} topic_id={id} title={title} />
         })
     }
 
