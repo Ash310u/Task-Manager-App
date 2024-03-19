@@ -10,6 +10,7 @@ const app = express();
 
 app.use(cors({
     origin:'https://task-manager-app-gilt-three.vercel.app'
+    // origin:'http://localhost:3000'
 }));
 app.use(express.json());
 app.use(topicRouter)
