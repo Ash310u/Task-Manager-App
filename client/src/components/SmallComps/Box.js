@@ -1,13 +1,19 @@
 import { twMerge } from "tailwind-merge";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidEditAlt, BiX } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 import { CgRemove } from "react-icons/cg";
-import { useDeleteTopicTaskMutation, useUpdateTopicTaskMutation } from "../../store";
+import { stateRemoveTopicTask, stateUpdateTopicTask, useDeleteTopicTaskMutation, useUpdateTopicTaskMutation } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const Box = ({ task, topic_id }) => {
+    const dispatch = useDispatch()
+    const { topics } = useSelector((state) => {
+        return state.topicSlice
+    })
+    // console.log(topics)
     const [isChecked, setIsChecked] = useState(task.completed)
     const [isEditVisible, setIsEditVisible] = useState(false)
 
@@ -15,8 +21,8 @@ const Box = ({ task, topic_id }) => {
     
     const authToken = window.localStorage.getItem('authToken')
 
-    const [updateTopicTask] = useUpdateTopicTaskMutation()
-    const [deleteTopicTask] = useDeleteTopicTaskMutation()
+    const [updateTopicTask, updateResults ] = useUpdateTopicTaskMutation()
+    const [deleteTopicTask, deleteResults] = useDeleteTopicTaskMutation()
 
     const handleChecked = () => {
         updateTopicTask({
@@ -55,6 +61,15 @@ const Box = ({ task, topic_id }) => {
             setnewTaskValue('')
         }
     }
+    useEffect(() => {
+        if(updateResults.isSuccess) {
+
+            dispatch(stateUpdateTopicTask({
+                topic_id,
+                task: updateResults.data[0]
+            }))
+        }
+    },[updateResults.data, dispatch])
 
     const handleDeleteTask = () => {
         deleteTopicTask({
@@ -63,7 +78,12 @@ const Box = ({ task, topic_id }) => {
                     task_id:task._id
                 })
     }
-
+    if (deleteResults.isSuccess) {
+        dispatch(stateRemoveTopicTask({
+            topic_id,
+            task_id:task._id
+        }))
+    }
     return (
         <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">
             <div className="bg-none text-lg text-gray-200 h-8 subpixel-antialiased rounded-full flex flex-col justify-center items-center" onClick={handleChecked} >
