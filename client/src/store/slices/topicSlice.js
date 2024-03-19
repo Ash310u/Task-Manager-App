@@ -4,7 +4,6 @@ const topicSlice = createSlice({
     name: 'topic',
     initialState: {
         topics: [],
-        tasks:[]
     },
     reducers: {
         stateAddManyTopic(state, action) {
@@ -33,10 +32,27 @@ const topicSlice = createSlice({
                 }
             });
         },
-        stateAddManyTask(state, action) {
-            if(!state.tasks.includes(action.payload)) {
-                state.tasks.push(...action.payload)
-            }
+        stateUpdateTopicTask(state, action) {
+            const topic = state.topics.find((topic) => {
+                return topic._id === action.payload.topic_id
+            })
+            topic?.tasks.forEach((task, i) => {
+                if(task._id === action.payload.task._id) {
+                    topic.tasks[i] = action.payload.task
+                    return topic
+                }
+            })
+        },
+        stateRemoveTopicTask(state, action) {
+            state.topics.forEach((topic) => {
+                if(topic._id === action.payload.topic_id) {
+                    const tasks = topic?.tasks.filter((task) => {
+                        return task._id !== action.payload.task_id
+                    })
+                    return topic.tasks = tasks
+                }
+            })
+
         },
     }
 })
@@ -47,6 +63,7 @@ export const {
     stateUpdateTopic,
     stateRemoveTopic,
     stateCreateTopicTask,
-    stateAddManyTask
+    stateUpdateTopicTask,
+    stateRemoveTopicTask
 } = topicSlice.actions;
 export const topicReducer = topicSlice.reducer;
