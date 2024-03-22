@@ -6,14 +6,10 @@ import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 import { CgRemove } from "react-icons/cg";
 import { stateRemoveTopicTask, stateUpdateTopicTask, useDeleteTopicTaskMutation, useUpdateTopicTaskMutation } from "../../store";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Box = ({ task, topic_id }) => {
     const dispatch = useDispatch()
-    const { topics } = useSelector((state) => {
-        return state.topicSlice
-    })
-    // console.log(topics)
     const [isChecked, setIsChecked] = useState(task.completed)
     const [isEditVisible, setIsEditVisible] = useState(false)
 

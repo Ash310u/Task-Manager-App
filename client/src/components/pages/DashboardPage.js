@@ -26,9 +26,7 @@ const DashboardPage = () => {
     }
     if (isSuccess) {
         content = topics.map((topic) => {
-            const title = topic.title
-            const id = topic._id
-            return <Panel key={id} topic_id={id} title={title} />
+            return <Panel key={topic._id} topic={topic} />
         })
     }
 
