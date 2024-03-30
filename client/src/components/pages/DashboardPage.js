@@ -35,7 +35,7 @@ const DashboardPage = () => {
             <div className="m-5">
                 {isSuccess && <ControlPanel data={topics} />}
             </div>
-            <div className="flex flex-row flex-4 gap-10 m-10 pl-10 pr-10 overflow-auto">
+            <div className="flex flex-row flex-4 gap-10 m-10 pl-10 pr-10 overflow-x-auto overflow-y-hidden">
                 {content}
             </div>
             {/* Style for hiding the scroll bar */}
@@ -44,7 +44,7 @@ const DashboardPage = () => {
                     .overflow-auto::-webkit-scrollbar {
                         width: 0 !important;
                     }
-                    .overflow-auto {
+                    .overflow-x-auto {
                         scrollbar-width: none;
                         -ms-overflow-style: none;
                     }

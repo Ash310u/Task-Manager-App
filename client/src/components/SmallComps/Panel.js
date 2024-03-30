@@ -117,7 +117,7 @@ const Panel = ({ topic }) => {
 
 
     return (
-        <div className="w-72 m-1 flex flex-col">
+        <div className="w-72 m-1 flex flex-col gap-3">
             <div className="w-72 h-14 p-2 flex flex-row justify-between items-center select-none gap-1  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg" >
                 {
                     isEditVisible ?
@@ -142,10 +142,22 @@ const Panel = ({ topic }) => {
                     </IconDiv>
                 </div>
             </div>
-            <div className="pb-4 pt-4 gap-2 flex flex-col items-center">
+            <div className="pb-4 pt-4 gap-2 flex flex-col items-center overflow-x-hidden overflow-y-auto">
                 {tasks}
                 {isInputVisible && <InputOperation value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
             </div>
+            {/* Style for hiding the scroll bar */}
+            <style>
+                {`
+                    .overflow-auto::-webkit-scrollbar {
+                        width: 0 !important;
+                    }
+                    .overflow-y-auto {
+                        scrollbar-width: none;
+                        -ms-overflow-style: none;
+                    }
+                `}
+            </style>
         </div>
     )
 }
