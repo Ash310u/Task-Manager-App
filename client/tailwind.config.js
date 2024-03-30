@@ -10,9 +10,11 @@ module.exports = {
       },
       width : {
         'login': '60%',
+        'md-login': '80%',
       },
       height : {
         'login': '60%',
+        'md-login': '80%',
       },
       backdropBlur: {
         xs: '2px',

@@ -66,17 +66,17 @@ const LoginPage = () => {
                     <div className={`
                         absolute flex flex-col items-center justify-center top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4  overflow-hidden rounded-full w-login h-login transition-opacity duration-700 ease-in ${opacityInput ? 'opacity-100 backdrop-blur' : 'opacity-0 backdrop-blur-none'}
                     `} >
-                        <div className='flex flex-row justify-center items-center w-full h-full rounded-full'>
-                            <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center gap-20 font-extralight ">
-                                <div className="flex flex-col justify-between items-center gap-2 text-white ">
+                        <div className='flex flex-row justify-center items-center xl:w-full xl:h-full rounded-lg lg:w-md-login lg:h-md-login '>
+                            <form onSubmit={handleSubmit} className="m-2 flex flex-col h-form justify-between items-center xl:gap-15 lg:gap-10 font-extralight">
+                                <div className="flex flex-col justify-between items-center xl:gap-2 lg:gap-1 text-white ">
                                     <Input name='name' type={'text'} placeholder={'Enter your name'} >Name</Input>
                                     <Input name='email' type={'email'} placeholder={'Enter your email'} >Email</Input>
                                     <Input name='password' type={'password'} placeholder={'Enter a password'} >Password</Input>
                                 </div>
-                                <div className=" h-20 flex flex-col justify-between items-center">
+                                <div className=" h-10 flex flex-col justify-between items-center">
 
                                     <button
-                                        className='w-72 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
+                                        className='xl:w-64 lg:w-56 p-1 bg-black  border-black  text-white rounded-full bg-opacity-50 hover:bg-opacity-70'
                                     >
                                         Sign in
                                     </button>
