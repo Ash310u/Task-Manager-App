@@ -5,7 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
 import { CgRemove } from "react-icons/cg";
-import { stateRemoveTopicTask, stateUpdateTopicTask, useDeleteTopicTaskMutation, useUpdateTopicTaskMutation } from "../../store";
+import { stateRemoveTask, stateUpdateTask, useDeleteTaskMutation, useUpdateTaskMutation } from "../../store";
 import { useDispatch } from "react-redux";
 
 const Box = ({ task, topic_id }) => {
@@ -17,8 +17,8 @@ const Box = ({ task, topic_id }) => {
     
     const authToken = window.localStorage.getItem('authToken')
 
-    const [updateTopicTask, updateResults ] = useUpdateTopicTaskMutation()
-    const [deleteTopicTask, deleteResults] = useDeleteTopicTaskMutation()
+    const [updateTopicTask, updateResults ] = useUpdateTaskMutation()
+    const [deleteTopicTask, deleteResults] = useDeleteTaskMutation()
 
     const handleChecked = () => {
         updateTopicTask({
@@ -59,11 +59,7 @@ const Box = ({ task, topic_id }) => {
     }
     useEffect(() => {
         if(updateResults.isSuccess) {
-
-            dispatch(stateUpdateTopicTask({
-                topic_id,
-                task: updateResults.data[0]
-            }))
+            dispatch(stateUpdateTask(updateResults.data))
         }
     },[updateResults.data, dispatch])
 
@@ -75,10 +71,7 @@ const Box = ({ task, topic_id }) => {
                 })
     }
     if (deleteResults.isSuccess) {
-        dispatch(stateRemoveTopicTask({
-            topic_id,
-            task_id:task._id
-        }))
+        dispatch(stateRemoveTask(task._id))
     }
     return (
         <div className="max-w-72 max-h-min flex flex-row gap-1 text-base justify-center items-center select-none">

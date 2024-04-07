@@ -1,64 +1,65 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const topicApi = createApi({
-    reducerPath: 'topic',
+const taskApi = createApi({
+    reducerPath:'task',
     baseQuery: fetchBaseQuery({
         // baseUrl:'http://localhost:3005/'
         baseUrl:process.env.REACT_APP_API_BASE_URL
     }),
-    endpoints(builder) {
+    endpoints: (builder) => {
         return {
-            fetchTopic: builder.query({
+            fetchTask: builder.query({
                 query: (authToken) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url: '/topics',
+                        url: `/tasks`,
                         method: 'GET',
                         headers
                     }
                 }
             }),
-            createTopic: builder.mutation({
-                query: ({ authToken, topic }) => {
+            createTask: builder.mutation({
+                query: ({authToken, topic_id, task}) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url: '/topics',
+                        url: `/${topic_id}/tasks`,
                         method: 'POST',
-                        body: topic,
+                        body:task,
                         headers
                     }
                 }
             }),
-            updateTopic: builder.mutation({
-                query: ({ authToken, topic }) => {
+            updateTask: builder.mutation({
+                query: ({authToken, topic_id, task_id, task}) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url: `/topics/${topic._id}`,
+                        url: `/${topic_id}/tasks/${task_id}`,
                         method: 'PATCH',
-                        body: topic,
+                        body:task,
                         headers
                     }
                 }
             }),
-            deleteTopic: builder.mutation({
-                query: ({ authToken, topic_id }) => {
+            deleteTask: builder.mutation({
+                query: ({authToken, topic_id, task_id}) => {
                     const headers = { 'Authorization': `Bearer ${authToken}` }
                     return {
-                        url: `/topics/${topic_id}`,
+                        url: `/${topic_id}/tasks/${task_id}`,
                         method: 'DELETE',
                         headers
                     }
                 }
             }),
+
         }
     }
 })
 
-export const { 
-    useFetchTopicQuery, 
-    useCreateTopicMutation, 
-    useUpdateTopicMutation,
-    useDeleteTopicMutation
-    } = topicApi;
+export const {
+    useFetchTaskQuery,
+    useCreateTaskMutation,
+    useUpdateTaskMutation,
+    useDeleteTaskMutation
+} = taskApi;
 
-export { topicApi };
+export { taskApi };

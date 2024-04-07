@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { BiSolidEditAlt, BiSolidAddToQueue } from "react-icons/bi";
 import { CgRemove } from "react-icons/cg";
 import { BiX } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
-import { stateCreateTopicTask, stateRemoveTopic, stateUpdateTopic, useCreateTopicTaskMutation, useDeleteTopicMutation, useUpdateTopicMutation } from "../../store";
+import { useCreateTaskMutation, stateUpdateTopic, stateRemoveTopic, useDeleteTopicMutation, useUpdateTopicMutation, stateCreateTask } from "../../store";
 import Box from "./Box";
 
 const Panel = ({ topic }) => {
@@ -13,7 +13,14 @@ const Panel = ({ topic }) => {
     const [isInputVisible, setIsInputVisible] = useState(false)
 
     const dispatch = useDispatch()
-    
+
+    const { tasks } = useSelector((state) => {
+        return state.taskSlice
+    })
+    const filteredTask = tasks.filter((task) => {
+        return task.parent_id === topic._id
+    })
+
     const [taskValue, setTaskValue] = useState('')
     const [newTopicValue, setNewTopicValue] = useState(topic.title)
 
@@ -21,8 +28,8 @@ const Panel = ({ topic }) => {
 
     const [updateTopic, updateResults] = useUpdateTopicMutation()
     const [deleteTopic, deleteResults] = useDeleteTopicMutation()
-    const [createTopicTask, createResults] = useCreateTopicTaskMutation()
-
+    const [createTask, createResults] = useCreateTaskMutation()
+    
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
         if (!isEditVisible) {
@@ -53,10 +60,7 @@ const Panel = ({ topic }) => {
 
     useEffect(() => {
         if (updateResults.isSuccess) {
-            dispatch(stateUpdateTopic({
-                _id: topic._id,
-                title: updateResults.data.title
-            }))
+            dispatch(stateUpdateTopic(updateResults.data))
         }
     }, [updateResults.data, dispatch])
 
@@ -75,9 +79,9 @@ const Panel = ({ topic }) => {
     const handleTaskSubmitEnterPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            createTopicTask({
+            createTask({
                 authToken,
-                topic_id:topic._id,
+                topic_id: topic._id,
                 task: {
                     description: taskValue
                 }
@@ -89,11 +93,7 @@ const Panel = ({ topic }) => {
 
     useEffect(() => {
         if (createResults.isSuccess) {
-            const { tasks } = createResults.data
-            dispatch(stateCreateTopicTask({
-                topic_id: topic._id,
-                task: tasks[tasks.length - 1]
-            }))
+            dispatch(stateCreateTask(createResults.data))
         }
     }, [createResults.data, dispatch])
 
@@ -108,9 +108,9 @@ const Panel = ({ topic }) => {
         dispatch(stateRemoveTopic(topic._id))
     }
 
-    let tasks;
-    if (topic?.tasks) {
-        tasks = topic?.tasks.map((task) => {
+    let content;
+    if (filteredTask.length > 0) {
+        content = filteredTask.map((task) => {
             return <Box key={task._id} task={task} topic_id={topic._id} />
         })
     }
@@ -143,7 +143,7 @@ const Panel = ({ topic }) => {
                 </div>
             </div>
             <div className="pb-4 pt-4 gap-2 flex flex-col items-center overflow-x-hidden overflow-y-auto">
-                {tasks}
+                {content}
                 {isInputVisible && <InputOperation value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
             </div>
             {/* Style for hiding the scroll bar */}
