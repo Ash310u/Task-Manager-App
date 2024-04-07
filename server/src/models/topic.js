@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const taskSchema = require('./task')
 
 const topicSchema = new mongoose.Schema({
     title: {
@@ -7,12 +6,17 @@ const topicSchema = new mongoose.Schema({
         required:true,
         trim: true
     },
-    tasks:[taskSchema],
     owner:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'User',
         required: true
     }
+})
+
+topicSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'parent_id'
 })
 
 const Topic = mongoose.model('Topic', topicSchema)

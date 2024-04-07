@@ -66,6 +66,12 @@ userSchema.virtual('topics', {
     foreignField: 'owner'
 })
 
+userSchema.virtual('topics', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
 // setting toJSON method
 userSchema.methods.toJSON = function () {
     const user = this
