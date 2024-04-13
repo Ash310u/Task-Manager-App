@@ -10,7 +10,7 @@ const taskApi = createApi({
         return {
             fetchTask: builder.query({
                 query: (authToken) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/tasks`,
                         method: 'GET',
@@ -20,7 +20,7 @@ const taskApi = createApi({
             }),
             createTask: builder.mutation({
                 query: ({authToken, topic_id, task}) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/${topic_id}/tasks`,
                         method: 'POST',
@@ -31,7 +31,7 @@ const taskApi = createApi({
             }),
             updateTask: builder.mutation({
                 query: ({authToken, topic_id, task_id, task}) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/${topic_id}/tasks/${task_id}`,
                         method: 'PATCH',
@@ -42,12 +42,22 @@ const taskApi = createApi({
             }),
             deleteTask: builder.mutation({
                 query: ({authToken, topic_id, task_id}) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/${topic_id}/tasks/${task_id}`,
                         method: 'DELETE',
                         headers
                     }
+                }
+            }),
+            deleteAllTask: builder.mutation({
+                query: ({authToken, topic_id}) => {
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
+                    return {
+                        url: `/${topic_id}/tasks`,
+                        method: 'DELETE',
+                        headers
+                    };
                 }
             }),
 
@@ -59,7 +69,8 @@ export const {
     useFetchTaskQuery,
     useCreateTaskMutation,
     useUpdateTaskMutation,
-    useDeleteTaskMutation
+    useDeleteTaskMutation,
+    useDeleteAllTaskMutation
 } = taskApi;
 
 export { taskApi };
