@@ -27,8 +27,9 @@ setupListeners(store.dispatch);
 export {
     stateAddManyTask,
     stateCreateTask,
-    stateRemoveTask,
     stateUpdateTask,
+    stateRemoveTask,
+    stateRemoveTasks,
 } from "./slices/taskSlice"
 
 export {
@@ -55,6 +56,7 @@ export {
     useCreateTaskMutation,
     useUpdateTaskMutation,
     useDeleteTaskMutation,
+    useDeleteAllTaskMutation,
 } from './apis/taskApi'
 
 export { store };
