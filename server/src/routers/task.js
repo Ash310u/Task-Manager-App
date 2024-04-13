@@ -78,6 +78,17 @@ router.patch('/:topic_id/tasks/:id', auth, async (req, res) => {
     }
 })
 
+router.delete('/:topic_id/tasks', auth, async (req, res) => {
+    const parent_id = req.params.topic_id
+
+    try {
+        const deleteData = await Task.deleteMany({ parent_id })
+        res.send(deleteData)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
+
 router.delete('/:topic_id/tasks/:id', auth, async (req, res) => {
     const parent_id = req.params.topic_id
     const _id = req.params.id
