@@ -10,7 +10,7 @@ const topicApi = createApi({
         return {
             fetchTopic: builder.query({
                 query: (authToken) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: '/topics',
                         method: 'GET',
@@ -20,7 +20,7 @@ const topicApi = createApi({
             }),
             createTopic: builder.mutation({
                 query: ({ authToken, topic }) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: '/topics',
                         method: 'POST',
@@ -31,7 +31,7 @@ const topicApi = createApi({
             }),
             updateTopic: builder.mutation({
                 query: ({ authToken, topic }) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/topics/${topic._id}`,
                         method: 'PATCH',
@@ -42,7 +42,7 @@ const topicApi = createApi({
             }),
             deleteTopic: builder.mutation({
                 query: ({ authToken, topic_id }) => {
-                    const headers = { 'Authorization': `Bearer ${authToken}` }
+                    const headers = { 'Authorization': `Bearer ${authToken}` };
                     return {
                         url: `/topics/${topic_id}`,
                         method: 'DELETE',
