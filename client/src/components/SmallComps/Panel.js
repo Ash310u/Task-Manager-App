@@ -5,7 +5,7 @@ import { BiX } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import IconDiv from "./utilsComp/IconDiv";
 import InputOperation from "./utilsComp/InputOperation";
-import { useCreateTaskMutation, stateUpdateTopic, stateRemoveTopic, useDeleteTopicMutation, useUpdateTopicMutation, stateCreateTask } from "../../store";
+import { useCreateTaskMutation, stateUpdateTopic, stateRemoveTopic, useDeleteTopicMutation, useUpdateTopicMutation, stateCreateTask, useDeleteAllTaskMutation, stateRemoveTasks } from "../../store";
 import Box from "./Box";
 
 const Panel = ({ topic }) => {
@@ -29,7 +29,8 @@ const Panel = ({ topic }) => {
     const [updateTopic, updateResults] = useUpdateTopicMutation()
     const [deleteTopic, deleteResults] = useDeleteTopicMutation()
     const [createTask, createResults] = useCreateTaskMutation()
-    
+    const [deleteAllTask]= useDeleteAllTaskMutation()
+
     const handleEditInput = () => {
         setIsEditVisible(curr => !curr)
         if (!isEditVisible) {
@@ -102,10 +103,15 @@ const Panel = ({ topic }) => {
             authToken,
             topic_id: topic._id
         })
+        deleteAllTask({
+            authToken,
+            topic_id: topic._id
+        })
     }
 
     if (deleteResults.isSuccess) {
         dispatch(stateRemoveTopic(topic._id))
+        dispatch(stateRemoveTasks(topic._id))
     }
 
     let content;
@@ -115,9 +121,8 @@ const Panel = ({ topic }) => {
         })
     }
 
-
     return (
-        <div className="w-72 m-1 flex flex-col gap-3">
+        <div className="w-72 m-1 flex flex-col gap-2">
             <div className="w-72 h-14 p-2 flex flex-row justify-between items-center select-none gap-1  bg-gray-200 border-gray-200 backdrop-blur-lg bg-opacity-10 rounded-lg" >
                 {
                     isEditVisible ?
@@ -142,9 +147,9 @@ const Panel = ({ topic }) => {
                     </IconDiv>
                 </div>
             </div>
-            <div className="pb-4 pt-4 gap-2 flex flex-col items-center overflow-x-hidden overflow-y-auto">
+            <div className="pb-4 gap-2 flex flex-col items-center overflow-x-hidden overflow-y-auto" >
+                {isInputVisible && <InputOperation isInputVisible={isInputVisible} value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
                 {content}
-                {isInputVisible && <InputOperation value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
             </div>
             {/* Style for hiding the scroll bar */}
             <style>
