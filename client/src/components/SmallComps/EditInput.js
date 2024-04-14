@@ -14,6 +14,7 @@ function EditInput({addTopic}) {
         <form onSubmit={handleSubmit} className="flex flex-row justify-between gap-2 items-center pt-1 pb-1 pr-3 pl-3 ">
             <input
                 required
+                autoFocus
                 name="topic"
                 maxLength={30}
                 className="outline-none bg-gray-950 bg-opacity-40 p-1 rounded-l-lg pl-3"

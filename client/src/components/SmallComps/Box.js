@@ -87,9 +87,10 @@ const Box = ({ task, topic_id }) => {
                     {
                         isEditVisible ?
                             <InputOperation
+                                autoFocus={isEditVisible}
                                 value={newTaskValue}
                                 onChange={handleTaskInputChange}
-                                onKeyPress={handleTaskSubmitEnterPress}
+                                onKeyDown={handleTaskSubmitEnterPress}
                                 className={"min-w-30 w-36 ml-0 mr-1 p-0 pl-1.5"}
                             /> : task.description}
                 </p>

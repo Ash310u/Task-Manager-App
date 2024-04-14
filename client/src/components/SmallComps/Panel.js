@@ -72,7 +72,7 @@ const Panel = ({ topic }) => {
             setIsEditVisible(false)
         }
     }
-
+    
     const handleTaskInputChange = (e) => {
         setTaskValue(e.target.value)
     }
@@ -127,10 +127,11 @@ const Panel = ({ topic }) => {
                 {
                     isEditVisible ?
                         <InputOperation
+                            autoFocus={isEditVisible}
                             maxLength={30}
                             value={newTopicValue}
                             onChange={handleTopicInputChange}
-                            onKeyPress={handleTopicSubmitEnterPress}
+                            onKeyDown={handleTopicSubmitEnterPress}
                             className={"min-w-40 ml-0 mr-1 p-1.5"}
                         />
                         : <h3 className="text-base font-light pl-1.5 pr-1.5 subpixel-antialiased break-words select-text overflow-hidden">{topic?.title}</h3>
@@ -148,8 +149,8 @@ const Panel = ({ topic }) => {
                 </div>
             </div>
             <div className="pb-4 gap-2 flex flex-col items-center overflow-x-hidden overflow-y-auto" >
-                {isInputVisible && <InputOperation isInputVisible={isInputVisible} value={taskValue} onChange={handleTaskInputChange} onKeyPress={handleTaskSubmitEnterPress} />}
                 {content}
+                {isInputVisible && <InputOperation autoFocus={isInputVisible} value={taskValue} onChange={handleTaskInputChange} onKeyDown={handleTaskSubmitEnterPress} />}
             </div>
             {/* Style for hiding the scroll bar */}
             <style>
