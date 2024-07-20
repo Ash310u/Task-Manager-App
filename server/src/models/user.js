@@ -118,7 +118,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 // Hash the plain text password before saving - - - >
 // taking advantage of middleware using schema.
-// using 'pre' for  doing somthing before and event or there is 'post' for doing somthing just after an event .
+// using 'pre' for doing something before an event or there is 'post' for doing somthing just after an event .
 userSchema.pre('save', async function (next) {  // this function needs to be a standard function not an arrow function.
     const user = this
 
